@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2026 ISL & NEPSAC Class A Tennis — Belmont Hill</title>
+<style>
+:root { --crimson: #8E1838; --navy: #222D65; --black: #201E1E; --offwhite: #FAFAFA;
+  --parchment: #EEECE1; --win-bg: #DCEFD8; --win-fg: #2D6B2A;
+  --loss-bg: #FCE0E0; --loss-fg: #A02525; }
+* { box-sizing: border-box; }
+body { font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  background: var(--offwhite); color: var(--black); margin: 0; padding: 0; line-height: 1.55; }
+.container { max-width: 1320px; margin: 0 auto; padding: 48px 56px 96px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--crimson); margin: 0 0 8px; }
+.crimson-rule { width: 64px; height: 3px; background: var(--crimson); margin: 0 0 24px; }
+h1 { font-family: 'Inter', sans-serif; font-size: 44px; font-weight: 800; color: var(--navy); margin: 0 0 8px; letter-spacing: -0.02em; }
+h2 { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; color: var(--navy); margin: 48px 0 12px; letter-spacing: -0.01em; }
+h3 { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--navy); margin: 24px 0 12px; }
+.subtitle { color: #555; font-size: 14px; margin: 0 0 8px; }
+.dateline { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #888; margin: 0 0 32px; }
+.cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 32px 0 8px; }
+.card { background: white; border: 1px solid #E5E5E5; border-left: 3px solid var(--crimson); padding: 18px 20px; border-radius: 4px; }
+.card .label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+.card .value { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800; color: var(--navy); }
+.card .meta { font-size: 12.5px; color: #666; margin-top: 4px; }
+.card.bh { border-left-color: var(--crimson); background: #FFF5F7; }
+.card.bh .value { color: var(--crimson); }
+.tabs { display: flex; gap: 0; border-bottom: 2px solid #E5E5E5; margin: 40px 0 0; }
+.tab { padding: 14px 24px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #888; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+.tab:hover { color: var(--navy); }
+.tab.active { color: var(--crimson); border-bottom-color: var(--crimson); }
+.tab-pane { display: none; padding-top: 12px; }
+.tab-pane.active { display: block; }
+.tab .count { background: #E5E5E5; color: #555; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px; }
+.tab.active .count { background: var(--crimson); color: white; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; margin: 16px 0 8px; }
+th { background: var(--crimson); color: white; padding: 12px 10px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+td { padding: 11px 10px; border-bottom: 1px solid #EEE; vertical-align: middle; }
+tr.bh-row td { background: #FFF5F7; color: var(--crimson); font-weight: 700; }
+tr.tier-champ td:first-child { color: var(--crimson); font-weight: 700; }
+.tier { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.tier-Championship { background: var(--crimson); color: white; }
+.tier-Contender { background: var(--navy); color: white; }
+.tier-Competitive { background: #E5E5E5; color: var(--black); }
+.tier-Developing { background: #F4F4F4; color: #888; }
+.badge.isl-badge { background: var(--navy); color: white; padding: 2px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; margin-left: 6px; }
+.matrix-wrap { overflow-x: auto; }
+table.matrix { font-size: 11.5px; table-layout: fixed; min-width: 900px; }
+table.matrix th { font-size: 10px; padding: 4px 4px; vertical-align: bottom; height: 110px; white-space: nowrap; text-align: center; background: var(--crimson); }
+table.matrix th.row-head { vertical-align: middle; height: auto; padding: 8px 10px; text-align: left; }
+.col-label { writing-mode: vertical-rl; transform: rotate(180deg); display: inline-block; padding: 6px 0; }
+table.matrix td { text-align: center; padding: 8px 4px; border: 1px solid #EEE; font-weight: 600; }
+table.matrix td.diag { background: #F0F0F0; color: #BBB; }
+table.matrix td.empty { background: white; color: #DDD; }
+table.matrix td.win { background: var(--win-bg); color: var(--win-fg); }
+table.matrix td.loss { background: var(--loss-bg); color: var(--loss-fg); }
+table.matrix td:first-child { text-align: left; font-weight: 700; color: var(--navy); background: var(--offwhite); }
+table.matrix tr.bh-row td:first-child { color: var(--crimson); }
+table.matrix tr.bh-row td { background: #FFF8FA; }
+.legend { font-size: 12px; color: #666; margin: 8px 0 24px; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+.note { font-size: 12px; color: #888; font-style: italic; margin-top: 8px; }
+.match-list li { margin: 6px 0; }
+.footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid #E5E5E5; font-size: 12px; color: #888; }
+.footer a { color: var(--navy); text-decoration: underline; }
+ul.match-list { list-style: none; padding-left: 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="eyebrow">Belmont Hill Tennis · Scouting Report</div>
+<h1>2026 ISL & NEPSAC Class A Tennis</h1>
+<div class="crimson-rule"></div>
+<p class="dateline">As of April 27, 2026 · 5 weeks into spring season</p>
+
+<div class="cards">
+  <div class="card bh">
+    <div class="label">BH ISL Record</div>
+    <div class="value">6&ndash;1</div>
+    <div class="meta">Overall 8&ndash;1 · #3 in ISL</div>
+  </div>
+  <div class="card">
+    <div class="label">Signature Win</div>
+    <div class="value" style="font-size:22px;">BH 4, RL 3</div>
+    <div class="meta">4/8 · ended RL's 3-peat run</div>
+  </div>
+  <div class="card">
+    <div class="label">Only Loss</div>
+    <div class="value" style="font-size:22px;">Milton 5, BH 2</div>
+    <div class="meta">4/18 · home loss to ISL leader</div>
+  </div>
+  <div class="card">
+    <div class="label">NEPSAC Tournament</div>
+    <div class="value" style="font-size:22px;">May 16</div>
+    <div class="meta">Class A bracket · location TBD</div>
+  </div>
+</div>
+
+<div class="tabs" role="tablist">
+  <div class="tab active" data-tab="isl" role="tab">ISL Only <span class="count">16</span></div>
+  <div class="tab" data-tab="classa" role="tab">NEPSAC Class A <span class="count">18</span></div>
+  <div class="tab" data-tab="total" role="tab">Total Record <span class="count">16</span></div>
+</div>
+
+<div class="tab-pane active" id="pane-isl">
+  <h2>ISL Conference Standings</h2>
+  <p class="subtitle">Ranked by ISL conference winning percentage. Only ISL-vs-ISL matches count toward this record.</p>
+  <table>
+    <thead><tr><th style="width:50px;">#</th><th>School</th><th style="width:90px;">ISL Record</th><th style="width:90px;">Win %</th><th style="width:140px;">Tier</th></tr></thead>
+    <tbody><tr class="tier-champ"><td>1</td><td>Milton Academy</td><td>7-0</td><td>100%</td><td><span class="tier tier-Championship">Championship</span></td></tr>
+<tr class="tier-champ"><td>2</td><td>Noble & Greenough</td><td>7-0</td><td>100%</td><td><span class="tier tier-Championship">Championship</span></td></tr>
+<tr class="bh-row"><td>3</td><td>Belmont Hill</td><td>6-1</td><td>86%</td><td><span class="tier tier-Contender">Contender</span></td></tr>
+<tr class=""><td>4</td><td>Middlesex</td><td>6-2</td><td>75%</td><td><span class="tier tier-Contender">Contender</span></td></tr>
+<tr class=""><td>5</td><td>St. George's</td><td>5-2</td><td>71%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>6</td><td>BB&N</td><td>4-2</td><td>67%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>7</td><td>Roxbury Latin</td><td>4-2</td><td>67%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>8</td><td>Groton</td><td>3-2</td><td>60%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>9</td><td>Rivers</td><td>3-3</td><td>50%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>10</td><td>St. Sebastian's</td><td>2-5</td><td>29%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>11</td><td>Thayer Academy</td><td>2-6</td><td>25%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>12</td><td>Brooks</td><td>1-4</td><td>20%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>13</td><td>St. Mark's</td><td>1-5</td><td>17%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>14</td><td>Governor's Academy</td><td>1-6</td><td>14%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>15</td><td>Lawrence Academy</td><td>0-6</td><td>0%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>16</td><td>Tabor Academy</td><td>0-6</td><td>0%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+</tbody>
+  </table>
+
+  <h2>ISL Head-to-Head Matrix</h2>
+  <p class="subtitle">Read across: row team's result vs column team. Hover any cell for the date.</p>
+  <div class="legend">
+    <span class="dot" style="background:var(--win-bg);"></span> Win &nbsp;
+    <span class="dot" style="background:var(--loss-bg);"></span> Loss &nbsp;
+    <span class="dot" style="background:white; border:1px solid #DDD;"></span> Not yet played
+  </div>
+  <div class="matrix-wrap"><table class="matrix"><thead><tr><th class="row-head">Team</th><th><div class="col-label">Milton Academy</div></th><th><div class="col-label">Noble & Greenough</div></th><th><div class="col-label">Belmont Hill</div></th><th><div class="col-label">Middlesex</div></th><th><div class="col-label">St. George's</div></th><th><div class="col-label">BB&N</div></th><th><div class="col-label">Roxbury Latin</div></th><th><div class="col-label">Groton</div></th><th><div class="col-label">Rivers</div></th><th><div class="col-label">St. Sebastian's</div></th><th><div class="col-label">Thayer Academy</div></th><th><div class="col-label">Brooks</div></th><th><div class="col-label">St. Mark's</div></th><th><div class="col-label">Governor's Academy</div></th><th><div class="col-label">Lawrence Academy</div></th><th><div class="col-label">Tabor Academy</div></th><th>ISL</th></tr></thead><tbody><tr class=""><td>Milton Academy</td><td class="diag">—</td><td class="empty"></td><td class="win" title="04/18/2026: W 5-2"><strong>W</strong> 5-2</td><td class="win" title="04/15/2026: W 4-3"><strong>W</strong> 4-3</td><td class="win" title="04/08/2026: W 6-1"><strong>W</strong> 6-1</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/04/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="win" title="04/22/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/11/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="empty"></td><td class="win" title="04/25/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td><strong>7-0</strong></td></tr><tr class=""><td>Noble & Greenough</td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="win" title="04/11/2026: W 5-2"><strong>W</strong> 5-2</td><td class="empty"></td><td class="win" title="04/22/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/15/2026: W 6-1"><strong>W</strong> 6-1</td><td class="win" title="04/25/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="win" title="04/04/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/08/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/18/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>7-0</strong></td></tr><tr class="bh-row"><td>Belmont Hill</td><td class="loss" title="04/18/2026: L 2-5"><strong>L</strong> 2-5</td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/08/2026: W 4-3"><strong>W</strong> 4-3</td><td class="empty"></td><td class="empty"></td><td class="win" title="04/22/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/04/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="win" title="04/24/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/11/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="win" title="04/15/2026: W 7-0"><strong>W</strong> 7-0</td><td><strong>6-1</strong></td></tr><tr class=""><td>Middlesex</td><td class="loss" title="04/15/2026: L 3-4"><strong>L</strong> 3-4</td><td class="loss" title="04/11/2026: L 2-5"><strong>L</strong> 2-5</td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/21/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="win" title="04/18/2026: W 5-2"><strong>W</strong> 5-2</td><td class="empty"></td><td class="win" title="04/04/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/06/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/22/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/08/2026: W 7-0"><strong>W</strong> 7-0</td><td><strong>6-2</strong></td></tr><tr class=""><td>St. George's</td><td class="loss" title="04/08/2026: L 1-6"><strong>L</strong> 1-6</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="loss" title="04/22/2026: L 0-9"><strong>L</strong> 0-9</td><td class="empty"></td><td class="empty"></td><td class="win" title="04/15/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/01/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="win" title="04/18/2026: W 4-3"><strong>W</strong> 4-3</td><td class="win" title="04/04/2026: W 6-1"><strong>W</strong> 6-1</td><td class="win" title="04/11/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td><strong>5-2</strong></td></tr><tr class=""><td>BB&N</td><td class="empty"></td><td class="loss" title="04/22/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="loss" title="04/03/2026: L 2-5"><strong>L</strong> 2-5</td><td class="empty"></td><td class="empty"></td><td class="win" title="04/24/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="win" title="04/08/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/11/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/15/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td class="empty"></td><td><strong>4-2</strong></td></tr><tr class=""><td>Roxbury Latin</td><td class="empty"></td><td class="loss" title="04/15/2026: L 1-6"><strong>L</strong> 1-6</td><td class="loss" title="04/08/2026: L 3-4"><strong>L</strong> 3-4</td><td class="empty"></td><td class="win" title="04/22/2026: W 9-0"><strong>W</strong> 9-0</td><td class="win" title="04/03/2026: W 5-2"><strong>W</strong> 5-2</td><td class="diag">—</td><td class="win" title="04/17/2026: W 5-2"><strong>W</strong> 5-2</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/11/2026: W 7-0"><strong>W</strong> 7-0</td><td><strong>4-2</strong></td></tr><tr class=""><td>Groton</td><td class="empty"></td><td class="loss" title="04/25/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/17/2026: L 2-5"><strong>L</strong> 2-5</td><td class="diag">—</td><td class="empty"></td><td class="win" title="04/11/2026: W 7-0"><strong>W</strong> 7-0</td><td class="win" title="04/15/2026: W 6-1"><strong>W</strong> 6-1</td><td class="empty"></td><td class="empty"></td><td class="win" title="04/08/2026: W 6-1"><strong>W</strong> 6-1</td><td class="empty"></td><td class="empty"></td><td><strong>3-2</strong></td></tr><tr class=""><td>Rivers</td><td class="loss" title="04/04/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/21/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="loss" title="04/11/2026: L 3-4"><strong>L</strong> 3-4</td><td class="win" title="04/15/2026: W 4-3"><strong>W</strong> 4-3</td><td class="win" title="04/08/2026: W 4-3"><strong>W</strong> 4-3</td><td class="win" title="04/22/2026: W 5-2"><strong>W</strong> 5-2</td><td class="empty"></td><td class="empty"></td><td><strong>3-3</strong></td></tr><tr class=""><td>St. Sebastian's</td><td class="empty"></td><td class="loss" title="04/04/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/22/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="loss" title="04/15/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/24/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="loss" title="04/11/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/08/2026: W 6-1"><strong>W</strong> 6-1</td><td class="win" title="04/13/2026: W 4-3"><strong>W</strong> 4-3</td><td><strong>2-5</strong></td></tr><tr class=""><td>Thayer Academy</td><td class="loss" title="04/22/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/08/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/04/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/18/2026: L 2-5"><strong>L</strong> 2-5</td><td class="loss" title="04/01/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/15/2026: L 1-6"><strong>L</strong> 1-6</td><td class="win" title="04/11/2026: W 4-3"><strong>W</strong> 4-3</td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/25/2026: W 5-2"><strong>W</strong> 5-2</td><td><strong>2-6</strong></td></tr><tr class=""><td>Brooks</td><td class="loss" title="04/11/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/18/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/08/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/15/2026: L 3-4"><strong>L</strong> 3-4</td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/04/2026: W 6-1"><strong>W</strong> 6-1</td><td><strong>1-4</strong></td></tr><tr class=""><td>St. Mark's</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/24/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/04/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/18/2026: L 3-4"><strong>L</strong> 3-4</td><td class="loss" title="04/11/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/08/2026: L 3-4"><strong>L</strong> 3-4</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="win" title="04/15/2026: W 6-1"><strong>W</strong> 6-1</td><td class="empty"></td><td><strong>1-5</strong></td></tr><tr class=""><td>Governor's Academy</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/11/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/06/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/04/2026: L 1-6"><strong>L</strong> 1-6</td><td class="loss" title="04/15/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="loss" title="04/08/2026: L 1-6"><strong>L</strong> 1-6</td><td class="loss" title="04/22/2026: L 2-5"><strong>L</strong> 2-5</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="win" title="04/18/2026: W 6-1"><strong>W</strong> 6-1</td><td class="empty"></td><td><strong>1-6</strong></td></tr><tr class=""><td>Lawrence Academy</td><td class="loss" title="04/25/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/22/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/11/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/08/2026: L 1-6"><strong>L</strong> 1-6</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/15/2026: L 1-6"><strong>L</strong> 1-6</td><td class="loss" title="04/18/2026: L 1-6"><strong>L</strong> 1-6</td><td class="diag">—</td><td class="empty"></td><td><strong>0-6</strong></td></tr><tr class=""><td>Tabor Academy</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/15/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/08/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/11/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/13/2026: L 3-4"><strong>L</strong> 3-4</td><td class="loss" title="04/25/2026: L 2-5"><strong>L</strong> 2-5</td><td class="loss" title="04/04/2026: L 1-6"><strong>L</strong> 1-6</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td><strong>0-6</strong></td></tr></tbody></table></div>
+
+  <h2>Belmont Hill Match Schedule</h2>
+  <table>
+    <thead><tr><th style="width:120px;">Date</th><th style="width:90px;">Home/Away</th><th>Opponent</th><th style="width:120px;">Score</th><th style="width:80px;">Result</th></tr></thead>
+    <tbody><tr><td>04/01/2026</td><td>Away</td><td>Deerfield Academy</td><td>4-3</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/04/2026</td><td>Away</td><td>Thayer Academy</td><td>7-0</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/08/2026</td><td>Away</td><td>Roxbury Latin School</td><td>4-3</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/11/2026</td><td>Home</td><td>Governor's Academy</td><td>7-0</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/15/2026</td><td>Away</td><td>Tabor Academy</td><td>7-0</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/17/2026</td><td>Home</td><td>Phillips Academy Andover</td><td>—</td><td></td></tr>
+<tr><td>04/17/2026</td><td>Away</td><td>Phillips Academy Andover</td><td>4-3</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/18/2026</td><td>Home</td><td>Milton Academy</td><td>2-5</td><td style="color:var(--loss-fg);font-weight:700;">L</td></tr>
+<tr><td>04/22/2026</td><td>Home</td><td>St. Sebastian's</td><td>7-0</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/24/2026</td><td>Home</td><td>St. Mark's</td><td>7-0</td><td style="color:var(--win-fg);font-weight:700;">W</td></tr>
+<tr><td>04/25/2026</td><td>Home</td><td>St. Mark's</td><td>—</td><td></td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="tab-pane" id="pane-classa">
+  <h2>NEPSAC Class A Standings (2025-26)</h2>
+  <p class="subtitle">Official Class A roster (18 schools) per <a href="https://nepsac.org/coaches-associations/boys-sports/boys-tennis-nepsbta/">NEPSBTA</a>. "Class A Record" counts only matches against other Class A teams. Most Class A schools play in different conferences (Founders League, Eight Schools Association, ISL) so cross-matchups are rare in regular season.</p>
+  <table>
+    <thead><tr><th style="width:50px;">#</th><th>School</th><th style="width:130px;">Class A Record</th><th style="width:90px;">A Win %</th><th style="width:130px;">Overall Record</th></tr></thead>
+    <tbody><tr class=""><td>1</td><td>Milton Academy <span class="badge isl-badge">ISL</span></td><td>1-0</td><td>100%</td><td>7-0</td></tr>
+<tr class=""><td>2</td><td>Noble & Greenough <span class="badge isl-badge">ISL</span></td><td>1-0</td><td>100%</td><td>7-0</td></tr>
+<tr class=""><td>3</td><td>Brunswick</td><td>1-0</td><td>100%</td><td>1-0</td></tr>
+<tr class="bh-row"><td>4</td><td>Belmont Hill <span class="badge isl-badge">ISL</span></td><td>2-1</td><td>67%</td><td>8-1</td></tr>
+<tr class=""><td>5</td><td>Deerfield</td><td>1-1</td><td>50%</td><td>1-1</td></tr>
+<tr class=""><td>6</td><td>Avon Old Farms</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>7</td><td>Choate</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>8</td><td>Hopkins</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>9</td><td>Hotchkiss</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>10</td><td>Kent</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>11</td><td>Kingswood-Oxford</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>12</td><td>Loomis Chaffee</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>13</td><td>NMH</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>14</td><td>Phillips Exeter</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>15</td><td>St. Paul's</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>16</td><td>Taft</td><td>—</td><td>—</td><td>TBD</td></tr>
+<tr class=""><td>17</td><td>Groton <span class="badge isl-badge">ISL</span></td><td>0-1</td><td>0%</td><td>3-2</td></tr>
+<tr class=""><td>18</td><td>Phillips Andover</td><td>0-3</td><td>0%</td><td>2-6</td></tr>
+</tbody>
+  </table>
+
+  <h2>Class A vs Class A Head-to-Head Matrix</h2>
+  <p class="subtitle">Direct matchups between Class A schools this season. Cells without color: those teams haven't played each other (most won't until the May 16 NEPSAC tournament).</p>
+  <div class="legend">
+    <span class="dot" style="background:var(--win-bg);"></span> Win &nbsp;
+    <span class="dot" style="background:var(--loss-bg);"></span> Loss &nbsp;
+    <span class="dot" style="background:white; border:1px solid #DDD;"></span> Not yet played
+  </div>
+  <div class="matrix-wrap"><table class="matrix"><thead><tr><th class="row-head">Team</th><th><div class="col-label">Milton Academy</div></th><th><div class="col-label">Noble & Greenough</div></th><th><div class="col-label">Brunswick</div></th><th><div class="col-label">Belmont Hill</div></th><th><div class="col-label">Deerfield</div></th><th><div class="col-label">Avon Old Farms</div></th><th><div class="col-label">Choate</div></th><th><div class="col-label">Hopkins</div></th><th><div class="col-label">Hotchkiss</div></th><th><div class="col-label">Kent</div></th><th><div class="col-label">Kingswood-Oxford</div></th><th><div class="col-label">Loomis Chaffee</div></th><th><div class="col-label">NMH</div></th><th><div class="col-label">Phillips Exeter</div></th><th><div class="col-label">St. Paul's</div></th><th><div class="col-label">Taft</div></th><th><div class="col-label">Groton</div></th><th><div class="col-label">Phillips Andover</div></th><th>A Record</th></tr></thead><tbody><tr class=""><td>Milton Academy</td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="win" title="04/18/2026: W 5-2"><strong>W</strong> 5-2</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>1-0</strong></td></tr><tr class=""><td>Noble & Greenough</td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/25/2026: W 7-0"><strong>W</strong> 7-0</td><td class="empty"></td><td><strong>1-0</strong></td></tr><tr class=""><td>Brunswick</td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="03/28/2026: W 7-0"><strong>W</strong> 7-0</td><td><strong>1-0</strong></td></tr><tr class="bh-row"><td>Belmont Hill</td><td class="loss" title="04/18/2026: L 2-5"><strong>L</strong> 2-5</td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="win" title="04/01/2026: W 4-3"><strong>W</strong> 4-3</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/17/2026: W 4-3"><strong>W</strong> 4-3</td><td><strong>2-1</strong></td></tr><tr class=""><td>Deerfield</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="loss" title="04/01/2026: L 3-4"><strong>L</strong> 3-4</td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="win" title="04/18/2026: W 4-3"><strong>W</strong> 4-3</td><td><strong>1-1</strong></td></tr><tr class=""><td>Avon Old Farms</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Choate</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Hopkins</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Hotchkiss</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Kent</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Kingswood-Oxford</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Loomis Chaffee</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>NMH</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Phillips Exeter</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>St. Paul's</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Taft</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td class="empty"></td><td><strong>—</strong></td></tr><tr class=""><td>Groton</td><td class="empty"></td><td class="loss" title="04/25/2026: L 0-7"><strong>L</strong> 0-7</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td class="empty"></td><td><strong>0-1</strong></td></tr><tr class=""><td>Phillips Andover</td><td class="empty"></td><td class="empty"></td><td class="loss" title="03/28/2026: L 0-7"><strong>L</strong> 0-7</td><td class="loss" title="04/17/2026: L 3-4"><strong>L</strong> 3-4</td><td class="loss" title="04/18/2026: L 3-4"><strong>L</strong> 3-4</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="diag">—</td><td><strong>0-3</strong></td></tr></tbody></table></div>
+
+  <h2>Class A vs Class A — Confirmed 2026 Matches</h2>
+  <ul class="match-list"><li><strong>03/28/2026</strong> &nbsp; <strong>Brunswick School</strong> def. Phillips Academy Andover &nbsp; 7-0 <span class="note">— per Phillipian 4/3/2026</span></li>
+<li><strong>04/01/2026</strong> &nbsp; <strong>Belmont Hill</strong> def. Deerfield Academy &nbsp; 4-3</li>
+<li><strong>04/17/2026</strong> &nbsp; <strong>Belmont Hill</strong> def. Phillips Academy Andover &nbsp; 4-3 <span class="note">— per BH website</span></li>
+<li><strong>04/18/2026</strong> &nbsp; <strong>Milton Academy</strong> def. Belmont Hill &nbsp; 5-2 <span class="note">— per BH website</span></li>
+<li><strong>04/18/2026</strong> &nbsp; <strong>Deerfield Academy</strong> def. Phillips Academy Andover &nbsp; 4-3 <span class="note">— per Phillipian 4/24/2026</span></li>
+<li><strong>04/25/2026</strong> &nbsp; <strong>Noble & Greenough</strong> def. Groton &nbsp; 7-0 <span class="note">— per Nobles website</span></li>
+</ul>
+  <p class="note">Class A bracket gets settled at the May 16 NEPSAC tournament.</p>
+</div>
+
+<div class="tab-pane" id="pane-total">
+  <h2>Total / Overall Records</h2>
+  <p class="subtitle">Every ISL school's full record vs ANY opponent (includes ISL matches plus non-ISL games).</p>
+  <table>
+    <thead><tr><th style="width:50px;">#</th><th>School</th><th style="width:130px;">Overall Record</th><th style="width:90px;">Win %</th><th style="width:140px;">Tier</th></tr></thead>
+    <tbody><tr class="tier-champ"><td>1</td><td>Milton Academy</td><td>7-0</td><td>100%</td><td><span class="tier tier-Championship">Championship</span></td></tr>
+<tr class="tier-champ"><td>2</td><td>Noble & Greenough</td><td>7-0</td><td>100%</td><td><span class="tier tier-Championship">Championship</span></td></tr>
+<tr class="bh-row"><td>3</td><td>Belmont Hill</td><td>8-1</td><td>89%</td><td><span class="tier tier-Contender">Contender</span></td></tr>
+<tr class=""><td>4</td><td>Middlesex</td><td>6-2</td><td>75%</td><td><span class="tier tier-Contender">Contender</span></td></tr>
+<tr class=""><td>5</td><td>St. George's</td><td>6-2</td><td>75%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>6</td><td>Roxbury Latin</td><td>4-2</td><td>67%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>7</td><td>Groton</td><td>3-2</td><td>60%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>8</td><td>BB&N</td><td>4-3</td><td>57%</td><td><span class="tier tier-Competitive">Competitive</span></td></tr>
+<tr class=""><td>9</td><td>Rivers</td><td>3-3</td><td>50%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>10</td><td>Thayer Academy</td><td>3-6</td><td>33%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>11</td><td>St. Sebastian's</td><td>2-5</td><td>29%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>12</td><td>Brooks</td><td>1-4</td><td>20%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>13</td><td>St. Mark's</td><td>1-5</td><td>17%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>14</td><td>Governor's Academy</td><td>1-6</td><td>14%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>15</td><td>Tabor Academy</td><td>0-6</td><td>0%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+<tr class=""><td>16</td><td>Lawrence Academy</td><td>0-7</td><td>0%</td><td><span class="tier tier-Developing">Developing</span></td></tr>
+</tbody>
+  </table>
+
+  <h2>Recent Results Across the League</h2>
+  <table>
+    <thead><tr><th style="width:120px;">Date</th><th>Winner</th><th></th><th>Loser</th><th style="width:90px;">Score</th></tr></thead>
+    <tbody><tr><td>04/25/2026</td><td><strong>Noble & Greenough</strong></td><td>def.</td><td>Groton</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/25/2026</td><td><strong>Milton Academy</strong></td><td>def.</td><td>Lawrence Academy</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/25/2026</td><td><strong>Thayer Academy</strong></td><td>def.</td><td>Tabor Academy</td><td><strong>5-2</strong></td></tr>
+<tr><td>04/24/2026</td><td><strong>Buckingham Browne & Nichols</strong></td><td>def.</td><td>St. Sebastian's</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/24/2026</td><td><strong>Cushing Academy</strong></td><td>def.</td><td>Lawrence Academy</td><td><strong>6-1</strong></td></tr>
+<tr><td>04/24/2026</td><td style="color:var(--crimson);font-weight:700;"><strong>Belmont Hill</strong></td><td>def.</td><td style="color:var(--crimson);font-weight:700;">St. Mark's</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/22/2026</td><td style="color:var(--crimson);font-weight:700;"><strong>Belmont Hill</strong></td><td>def.</td><td style="color:var(--crimson);font-weight:700;">St. Sebastian's</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/22/2026</td><td><strong>Noble & Greenough</strong></td><td>def.</td><td>Buckingham Browne & Nichols</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/22/2026</td><td><strong>Roxbury Latin School</strong></td><td>def.</td><td>St. George's</td><td><strong>9-0</strong></td></tr>
+<tr><td>04/22/2026</td><td><strong>Middlesex</strong></td><td>def.</td><td>Lawrence Academy</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/22/2026</td><td><strong>Rivers School</strong></td><td>def.</td><td>Governor's Academy</td><td><strong>5-2</strong></td></tr>
+<tr><td>04/22/2026</td><td><strong>Milton Academy</strong></td><td>def.</td><td>Thayer Academy</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/21/2026</td><td><strong>Middlesex</strong></td><td>def.</td><td>Rivers School</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/21/2026</td><td><strong>Phillips Academy Andover</strong></td><td>def.</td><td>Concord Academy</td><td><strong>4-2</strong></td></tr>
+<tr><td>04/18/2026</td><td><strong>Middlesex</strong></td><td>def.</td><td>Thayer Academy</td><td><strong>5-2</strong></td></tr>
+<tr><td>04/18/2026</td><td style="color:var(--crimson);font-weight:700;"><strong>Milton Academy</strong></td><td>def.</td><td style="color:var(--crimson);font-weight:700;">Belmont Hill</td><td><strong>5-2</strong></td></tr>
+<tr><td>04/18/2026</td><td><strong>Noble & Greenough</strong></td><td>def.</td><td>Brooks</td><td><strong>7-0</strong></td></tr>
+<tr><td>04/18/2026</td><td><strong>St. George's</strong></td><td>def.</td><td>St. Mark's</td><td><strong>4-3</strong></td></tr>
+</tbody>
+  </table>
+
+  <h2>Why ISL & Total Differ</h2>
+  <p class="subtitle">For most teams, the records are identical because ISL teams mostly play each other. The differences:</p>
+  <table>
+    <thead><tr><th>Team</th><th style="width:120px;">ISL Record</th><th style="width:120px;">Overall</th><th>Non-ISL Match(es)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Belmont Hill</strong></td><td>6-1</td><td>8-1</td><td>4/1: <strong>def.</strong> Deerfield 4-3 (Class A); 4/17: <strong>def.</strong> Phillips Andover 4-3 (Class A)</td></tr>
+      <tr><td><strong>St. George's</strong></td><td>5-2</td><td>6-2</td><td>4/13: <strong>def.</strong> Wheeler 5-2</td></tr>
+      <tr><td><strong>Thayer Academy</strong></td><td>2-6</td><td>3-6</td><td>4/10: <strong>def.</strong> Portsmouth Abbey 7-0</td></tr>
+      <tr><td><strong>BB&N</strong></td><td>4-2</td><td>4-3</td><td>4/1: <em>lost</em> to Phillips Andover 2-5 (Class A)</td></tr>
+      <tr><td><strong>Lawrence Academy</strong></td><td>0-6</td><td>0-7</td><td>4/24: <em>lost</em> to Cushing 1-6</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  <p><strong>Sources:</strong> ISL standings &amp; schedule via <a href="https://www.islsports.org/boys-tennis/">islsports.org</a> (powered by rschoolstats.com / RSchoolToday). Belmont Hill 8-1 record verified via <a href="https://www.belmonthill.org/athletics/our-teams/athletic-teams-page/~athletics-team-id/181">BH Athletics</a>. Nobles 7-0 verified via <a href="https://nobilis.nobles.edu/Athletics/team_detail.php?team_id=51441">Nobles Athletics</a>. Middlesex 6-2 ISL / 8-2 overall via <a href="https://athletics.mxschool.edu/sports/mens-tennis/schedule">MX Athletics</a>. NEPSAC Class A 2025 classifications via <a href="https://assets-rst7.rschooltoday.com/rst7files/uploads/sites/328/2025/03/31092859/B-tennis-classifications-2025-2.pdf">NEPSBTA PDF</a>. Phillips Andover record via <a href="https://phillipian.net/2026/04/24/boys-tennis-powers-through-concord-falls-to-deerfield/">The Phillipian, 4/24/2026</a>.</p>
+  <p>Belmont Hill School · Computer Science Dept. · Generated April 27, 2026</p>
+</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    const target = t.dataset.tab;
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('pane-' + target).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
