@@ -33,7 +33,7 @@
       "home_score": 1,
       "away_score": 6,
       "status": "completed",
-      "source": "brunswick_site"
+      "source": "brunswick_site,rl_site"
     },
     {
       "date": "03/28/2026",
@@ -192,6 +192,15 @@
       "source": "loomis_site,exeter_site"
     },
     {
+      "date": "04/04/2026",
+      "home": "Buckingham Browne & Nichols",
+      "away": "Roxbury Latin School",
+      "home_score": 2,
+      "away_score": 5,
+      "status": "completed",
+      "source": "rl_site"
+    },
+    {
       "date": "04/06/2026",
       "home": "Middlesex",
       "away": "Governor's Academy",
@@ -223,7 +232,7 @@
       "home_score": 3,
       "away_score": 4,
       "status": "completed",
-      "source": "isl_feed,bh_site"
+      "source": "isl_feed,bh_site,rl_site"
     },
     {
       "date": "04/08/2026",
@@ -349,7 +358,7 @@
       "home_score": 7,
       "away_score": 0,
       "status": "completed",
-      "source": "isl_feed"
+      "source": "isl_feed,rl_site"
     },
     {
       "date": "04/11/2026",
@@ -491,7 +500,7 @@
       "home_score": 1,
       "away_score": 6,
       "status": "completed",
-      "source": "isl_feed,nobles_site"
+      "source": "isl_feed,nobles_site,rl_site"
     },
     {
       "date": "04/15/2026",
@@ -663,6 +672,15 @@
       "source": "loomis_site"
     },
     {
+      "date": "04/18/2026",
+      "home": "Groton",
+      "away": "Roxbury Latin School",
+      "home_score": 2,
+      "away_score": 5,
+      "status": "completed",
+      "source": "rl_site"
+    },
+    {
       "date": "04/20/2026",
       "home": "Governor's Academy",
       "away": "Brooks",
@@ -725,10 +743,10 @@
       "date": "04/22/2026",
       "home": "Roxbury Latin School",
       "away": "St. George's",
-      "home_score": 9,
+      "home_score": 7,
       "away_score": 0,
       "status": "completed",
-      "source": "isl_feed"
+      "source": "isl_feed,rl_site"
     },
     {
       "date": "04/22/2026",
@@ -863,8 +881,10 @@
       "date": "04/25/2026",
       "home": "Roxbury Latin School",
       "away": "Governor's Academy",
-      "status": "scheduled",
-      "source": "isl_feed"
+      "status": "completed",
+      "source": "isl_feed,rl_site",
+      "home_score": 7,
+      "away_score": 0
     },
     {
       "date": "04/25/2026",
@@ -903,7 +923,7 @@
       "home": "Noble & Greenough",
       "away": "Phillips Academy Andover",
       "status": "completed",
-      "source": "nobles",
+      "source": "nobles,nobles_site,andover_site",
       "home_score": 5,
       "away_score": 2
     },
