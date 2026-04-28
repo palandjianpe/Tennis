@@ -34,9 +34,19 @@ ALIASES = schools["name_aliases"]
 ISL_SCHOOLS = schools["isl"]
 CLASS_A_ONLY = schools["class_a_only"]
 ALL_CLASS_A = {**{k: v for k, v in ISL_SCHOOLS.items() if v.get("class_a")}, **CLASS_A_ONLY}
+ALL_SCHOOLS = {**ISL_SCHOOLS, **CLASS_A_ONLY}
+SCHOOL_URLS = {full: meta.get("url") for full, meta in ALL_SCHOOLS.items() if meta.get("url")}
 
 def canonicalize(name: str) -> str:
     return ALIASES.get(name.strip(), name.strip())
+
+def school_link(full_name: str, label: str = None):
+    """Wrap a school's display label in an <a> if we have a URL for it."""
+    label = label if label is not None else full_name
+    url = SCHOOL_URLS.get(full_name)
+    if url:
+        return f'<a class="school-link" href="{url}" target="_blank" rel="noopener">{label}</a>'
+    return label
 
 # Normalize all match names through aliases
 matches = []
@@ -183,7 +193,8 @@ def standings_table(standings):
         pct = f"{s['pct']*100:.0f}%" if (s["w"] + s["l"]) else "—"
         rec = f"{s['w']}-{s['l']}" if (s["w"] + s["l"]) else "—"
         tier = tier_for(i, total)
-        rows += f'<tr class="{cls}"><td>{i}</td><td>{s["short"]}</td><td>{rec}</td><td>{pct}</td><td><span class="tier tier-{tier}">{tier}</span></td></tr>\n'
+        name_html = school_link(s["full"], s["short"])
+        rows += f'<tr class="{cls}"><td>{i}</td><td>{name_html}</td><td>{rec}</td><td>{pct}</td><td><span class="tier tier-{tier}">{tier}</span></td></tr>\n'
     return rows
 
 def h2h_matrix(standings, h2h, scheduled, label_col_name="Record"):
@@ -191,13 +202,13 @@ def h2h_matrix(standings, h2h, scheduled, label_col_name="Record"):
     ordered = [s["full"] for s in standings]
     head = '<tr><th class="row-head">Team</th>'
     for f in ordered:
-        head += f'<th><div class="col-label">{full_to_short[f]}</div></th>'
+        head += f'<th><div class="col-label">{school_link(f, full_to_short[f])}</div></th>'
     head += f'<th>{label_col_name}</th></tr>'
     body = ""
     for i, full in enumerate(ordered):
         s = standings[i]
         cls = "bh-row" if s["short"] == "Belmont Hill" else ""
-        body += f'<tr class="{cls}"><td>{s["short"]}</td>'
+        body += f'<tr class="{cls}"><td>{school_link(full, s["short"])}</td>'
         for opp_full in ordered:
             body += h2h_cell(full, opp_full, h2h, scheduled)
         rec = f"{s['w']}-{s['l']}" if (s.get("w", 0) + s.get("l", 0)) else "—"
@@ -213,7 +224,8 @@ for i, s in enumerate(ca_combined, 1):
     a_pct = f"{s['a_pct']*100:.0f}%" if (s["a_w"] + s["a_l"]) else "—"
     ovr = f"{s['ovr_w']}-{s['ovr_l']}" if (s["ovr_w"] + s["ovr_l"]) else "TBD"
     isl_badge = ' <span class="badge isl-badge">ISL</span>' if s["in_isl"] else ''
-    ca_table_rows += f'<tr class="{cls}"><td>{i}</td><td>{s["short"]}{isl_badge}</td><td>{a_rec}</td><td>{a_pct}</td><td>{ovr}</td></tr>\n'
+    name_html = school_link(s["full"], s["short"])
+    ca_table_rows += f'<tr class="{cls}"><td>{i}</td><td>{name_html}{isl_badge}</td><td>{a_rec}</td><td>{a_pct}</td><td>{ovr}</td></tr>\n'
 
 # Class A matrix needs short names that include all 18 schools
 ca_matrix_standings = []
@@ -258,7 +270,9 @@ for m in bh_matches:
     if m["result"] == "W": rstyle = ' style="color:var(--win-fg);font-weight:700;"'
     elif m["result"] == "L": rstyle = ' style="color:var(--loss-fg);font-weight:700;"'
     else: rstyle = ''
-    bh_match_rows += f'<tr><td>{m["date"]}</td><td>{m["home_away"]}</td><td>{m["opp"]}</td><td>{m["score"]}</td><td{rstyle}>{m["result"]}</td></tr>\n'
+    opp_short = ALL_SCHOOLS.get(m["opp"], {}).get("short", m["opp"])
+    opp_html = school_link(m["opp"], opp_short)
+    bh_match_rows += f'<tr><td>{m["date"]}</td><td>{m["home_away"]}</td><td>{opp_html}</td><td>{m["score"]}</td><td{rstyle}>{m["result"]}</td></tr>\n'
 
 # Recent results
 completed_matches = [m for m in matches if is_completed(m)]
@@ -274,7 +288,11 @@ for m in completed_matches[:18]:
     hi, lo = max(hs, as_), min(hs, as_)
     is_bh = winner == "Belmont Hill" or loser == "Belmont Hill"
     bh_class = ' style="color:var(--crimson);font-weight:700;"' if is_bh else ''
-    recent_rows += f'<tr><td>{m["date"]}</td><td{bh_class}><strong>{winner}</strong></td><td>def.</td><td{bh_class}>{loser}</td><td><strong>{hi}-{lo}</strong></td></tr>\n'
+    winner_short = ALL_SCHOOLS.get(winner, {}).get("short", winner)
+    loser_short = ALL_SCHOOLS.get(loser, {}).get("short", loser)
+    winner_html = school_link(winner, winner_short)
+    loser_html = school_link(loser, loser_short)
+    recent_rows += f'<tr><td>{m["date"]}</td><td{bh_class}><strong>{winner_html}</strong></td><td>def.</td><td{bh_class}>{loser_html}</td><td><strong>{hi}-{lo}</strong></td></tr>\n'
 
 # Class A vs Class A matches
 ca_match_li = ""
@@ -289,7 +307,9 @@ for m in ca_played:
     loser = m["away"] if hs > as_ else m["home"]
     hi, lo = max(hs, as_), min(hs, as_)
     src_str = f' <span class="note">— per {m.get("source", "ISL feed")}</span>' if m.get("source") else ""
-    ca_match_li += f'<li><strong>{m["date"]}</strong> &nbsp; <strong>{winner}</strong> def. {loser} &nbsp; {hi}-{lo}{src_str}</li>\n'
+    winner_html = school_link(winner)
+    loser_html = school_link(loser)
+    ca_match_li += f'<li><strong>{m["date"]}</strong> &nbsp; <strong>{winner_html}</strong> def. {loser_html} &nbsp; {hi}-{lo}{src_str}</li>\n'
 
 # Upcoming Class A vs Class A
 ca_upcoming = sorted([m for m in matches if m.get("status") == "scheduled"
@@ -297,7 +317,9 @@ ca_upcoming = sorted([m for m in matches if m.get("status") == "scheduled"
                      key=lambda x: datetime.strptime(x["date"], "%m/%d/%Y"))
 ca_upcoming_li = ""
 for m in ca_upcoming:
-    ca_upcoming_li += f'<li><strong>{m["date"]}</strong> &nbsp; {m["home"]} <em>vs</em> {m["away"]}</li>\n'
+    home_html = school_link(m["home"])
+    away_html = school_link(m["away"])
+    ca_upcoming_li += f'<li><strong>{m["date"]}</strong> &nbsp; {home_html} <em>vs</em> {away_html}</li>\n'
 
 # Compute season snapshot for top stat cards (no BH-specific cards now)
 co_leaders = [s for s in isl_standings if s["w"] > 0 and s["l"] == 0]
@@ -369,6 +391,10 @@ table.matrix tr.bh-row td {{ background: #FFF8FA; }}
 .match-list li {{ margin: 6px 0; }}
 .footer {{ margin-top: 64px; padding-top: 24px; border-top: 1px solid #E5E5E5; font-size: 12px; color: #888; }}
 .footer a {{ color: var(--navy); text-decoration: underline; }}
+.school-link {{ color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(34, 45, 101, 0.35); }}
+.school-link:hover {{ color: var(--crimson); border-bottom-color: var(--crimson); }}
+table.matrix .school-link {{ border-bottom: none; }}
+table.matrix .school-link:hover {{ text-decoration: underline; }}
 ul.match-list {{ list-style: none; padding-left: 0; }}
 .split {{ display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }}
 @media (max-width: 800px) {{ .cards {{ grid-template-columns: 1fr; }} .split {{ grid-template-columns: 1fr; }} }}
