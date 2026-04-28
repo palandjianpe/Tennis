@@ -1,6 +1,6 @@
 {
   "_comment": "Source of truth for all matches. Edit by hand or via script. Each match: {date: 'MM/DD/YYYY', home, away, home_score, away_score, status: 'completed|scheduled|cancelled|scrimmage', source}",
-  "_last_updated": "2026-04-27",
+  "_last_updated": "2026-04-28",
   "season": "2026",
   "matches": [
     {
@@ -902,8 +902,10 @@
       "date": "04/27/2026",
       "home": "Noble & Greenough",
       "away": "Phillips Academy Andover",
-      "status": "scheduled",
-      "source": "nobles_site,andover_site"
+      "status": "completed",
+      "source": "nobles",
+      "home_score": 5,
+      "away_score": 2
     },
     {
       "date": "04/27/2026",
