@@ -102,6 +102,8 @@ ca_known_overall = {
     "Phillips Academy Andover": (2, 6),  # 2-6 per Phillipian 4/24
     "Brunswick School": (1, 0),  # only known: 7-0 vs Andover
     "Deerfield Academy": (1, 1),  # 4-3 vs Andover, 3-4 vs BH
+    "Loomis Chaffee": (4, 2),  # 4-2 per loomischaffee.org team page snippet (4/22)
+    "St. Paul's School": (1, 1),  # W vs New Hampton 4/13 + L vs Exeter 4/8
 }
 for full, (w, l) in ca_known_overall.items():
     cur = ca_overall_record[full]
