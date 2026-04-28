@@ -32,10 +32,11 @@ LEGACY_OUTPUT = ROOT / "ISL_Tennis_Report_2026.html"
 CRIMSON = "#8E1838"
 NAVY = "#222D65"
 
-# Elo knobs
-ELO_BASE = 1500.0
-ELO_K = 32.0
-ELO_MARGIN_FACTOR = 0.6  # margin 1->1.0x, 7->1.6x — bigger blowouts move more
+# Rating knobs (Bradley-Terry MLE)
+RATING_BASE = 1500.0
+RATING_PRIOR_LINES = 8.0   # Bayesian prior: virtual lines vs an average opponent (smaller = more spread, larger = more shrinkage to 1500)
+RATING_MAX_ITER = 500      # MM iterations for convergence
+RATING_TOL = 1e-7
 LOW_CONFIDENCE_GAMES = 3
 
 with open(DATA / "schools.json") as f:
@@ -71,47 +72,104 @@ def is_completed(m):
 # ============================
 # Elo computation
 # ============================
-def compute_elo(matches):
-    """Compute Elo rating for each team based on completed matches in chronological order.
+def compute_ratings(matches):
+    """Compute team ratings via Bradley-Terry maximum-likelihood estimation.
 
-    Tennis dual-meet matches are 7-point. Margin multiplier scales the rating
-    swing: 1-point win is normal, a 7-0 sweep moves ratings ~1.6x as much.
+    Treats each tennis dual meet as multiple independent "lines" (a 7-0 contributes
+    7 line-wins for the winner; a 4-3 contributes 4 wins and 3 losses). Then
+    iteratively solves for team strengths that best explain ALL line outcomes
+    simultaneously — this is mathematically optimal for the transitive
+    "common opponent" inferences ("BH beat RL 4-3 by close margin, RL beat
+    SG 9-0 by huge margin, therefore BH almost certainly crushes SG").
+
+    Uses MM (minorization-maximization) iteration with a small Bayesian prior
+    (virtual games vs an average opponent) to keep undefeated/winless teams
+    from running off to infinity.
+
+    Returns (ratings_dict, games_count_dict) where ratings are Elo-scaled
+    around 1500 and games_count counts only real matches (not virtual prior).
     """
-    ratings = defaultdict(lambda: ELO_BASE)
-    games = defaultdict(int)
-    sorted_completed = sorted(
-        [m for m in matches if is_completed(m)],
-        key=lambda m: datetime.strptime(m["date"], "%m/%d/%Y")
-    )
-    for m in sorted_completed:
+    teams_set = set()
+    for m in matches:
+        if is_completed(m):
+            teams_set.add(m["home"])
+            teams_set.add(m["away"])
+    teams = sorted(teams_set)
+    n = len(teams)
+    if n == 0:
+        return {}, {}
+
+    # Build line-win totals (W[i] = total lines won by i across all real matches)
+    # and pairwise line totals (N_pair[(i,j)] = total lines played between i and j)
+    W = defaultdict(float)
+    N_pair = defaultdict(float)
+    games_count = defaultdict(int)
+    for m in matches:
+        if not is_completed(m):
+            continue
         try:
             hs, as_ = int(m["home_score"]), int(m["away_score"])
         except (ValueError, TypeError):
             continue
-        if hs == as_:
+        total = hs + as_
+        if total == 0:
             continue
         h, a = m["home"], m["away"]
-        margin = abs(hs - as_)
-        # Margin multiplier: 1 -> 1.0, 7 -> 1.0 + 0.6 = 1.6
-        margin_mult = 1.0 + ELO_MARGIN_FACTOR * (margin - 1) / 6.0
-        # Expected probability
-        E_h = 1.0 / (1.0 + 10 ** ((ratings[a] - ratings[h]) / 400.0))
-        S_h = 1.0 if hs > as_ else 0.0
-        delta = ELO_K * margin_mult * (S_h - E_h)
-        ratings[h] += delta
-        ratings[a] -= delta
-        games[h] += 1
-        games[a] += 1
-    return dict(ratings), dict(games)
+        W[h] += hs
+        W[a] += as_
+        key = tuple(sorted([h, a]))
+        N_pair[key] += total
+        games_count[h] += 1
+        games_count[a] += 1
+
+    # Bayesian prior: each team has played RATING_PRIOR_LINES virtual lines
+    # against a virtual "average" opponent (pi=1), winning half. This stabilizes
+    # the MLE for teams with very lopsided records.
+    for t in teams:
+        W[t] += RATING_PRIOR_LINES / 2.0
+
+    # Initialize all strengths at 1.0
+    pi = {t: 1.0 for t in teams}
+
+    # MM iterations for Bradley-Terry MLE
+    last_diff = float("inf")
+    for iteration in range(RATING_MAX_ITER):
+        new_pi = {}
+        for i in teams:
+            num = W[i]
+            denom = 0.0
+            for j in teams:
+                if i == j:
+                    continue
+                key = tuple(sorted([i, j]))
+                if key in N_pair:
+                    denom += N_pair[key] / (pi[i] + pi[j])
+            # Prior contribution: RATING_PRIOR_LINES games vs virtual avg (pi=1)
+            denom += RATING_PRIOR_LINES / (pi[i] + 1.0)
+            new_pi[i] = num / max(denom, 1e-12)
+        # Normalize so geometric mean of pi = 1 (prevents drift)
+        log_pi = [math.log(max(v, 1e-12)) for v in new_pi.values()]
+        gm = math.exp(sum(log_pi) / n)
+        for t in teams:
+            new_pi[t] /= gm
+        diff = max(abs(new_pi[t] - pi[t]) for t in teams)
+        pi = new_pi
+        if diff < RATING_TOL:
+            break
+        last_diff = diff
+
+    # Map strengths to Elo-style ratings (mean ~1500, scale 400/log10)
+    ratings = {t: RATING_BASE + 400.0 * math.log10(max(pi[t], 1e-12)) for t in teams}
+    return ratings, dict(games_count)
 
 def win_probability(rating_a, rating_b):
-    """Probability that team A beats team B (Elo formula)."""
+    """Probability that team A wins one line vs team B (Bradley-Terry/Elo formula)."""
     return 1.0 / (1.0 + 10 ** ((rating_b - rating_a) / 400.0))
 
-elo_ratings, elo_games = compute_elo(matches)
+elo_ratings, elo_games = compute_ratings(matches)
 
 def elo_for(team):
-    return elo_ratings.get(team, ELO_BASE)
+    return elo_ratings.get(team, RATING_BASE)
 
 def games_for(team):
     return elo_games.get(team, 0)
@@ -374,12 +432,13 @@ for m in completed_matches[:18]:
     recent_rows += f'<tr><td>{m["date"]}</td><td{bh_class}><strong>{winner}</strong></td><td>def.</td><td{bh_class}>{loser}</td><td><strong>{hi}-{lo}</strong></td></tr>\n'
 
 # ============================
-# Class A vs Class A — played + upcoming
+# Class A vs Class A — played (last 5, most recent first) + upcoming (next 5)
 # ============================
 ca_match_li = ""
-ca_played = sorted([m for m in matches if is_completed(m) and m["home"] in CLASS_A_FULL and m["away"] in CLASS_A_FULL],
-                   key=lambda x: datetime.strptime(x["date"], "%m/%d/%Y"))
-for m in ca_played:
+ca_played_all = sorted([m for m in matches if is_completed(m) and m["home"] in CLASS_A_FULL and m["away"] in CLASS_A_FULL],
+                       key=lambda x: datetime.strptime(x["date"], "%m/%d/%Y"), reverse=True)
+ca_played_recent = ca_played_all[:5]
+for m in ca_played_recent:
     try:
         hs, as_ = int(m["home_score"]), int(m["away_score"])
     except (ValueError, TypeError):
@@ -390,11 +449,12 @@ for m in ca_played:
     src_str = f' <span class="note">— per {m.get("source", "ISL feed")}</span>' if m.get("source") else ""
     ca_match_li += f'<li><strong>{m["date"]}</strong> &nbsp; <strong>{winner}</strong> def. {loser} &nbsp; {hi}-{lo}{src_str}</li>\n'
 
-ca_upcoming = sorted([m for m in matches if m.get("status") == "scheduled"
-                      and m["home"] in CLASS_A_FULL and m["away"] in CLASS_A_FULL],
-                     key=lambda x: datetime.strptime(x["date"], "%m/%d/%Y"))
+ca_upcoming_all = sorted([m for m in matches if m.get("status") == "scheduled"
+                          and m["home"] in CLASS_A_FULL and m["away"] in CLASS_A_FULL],
+                         key=lambda x: datetime.strptime(x["date"], "%m/%d/%Y"))
+ca_upcoming_next = ca_upcoming_all[:5]
 ca_upcoming_li = ""
-for m in ca_upcoming:
+for m in ca_upcoming_next:
     p = win_probability(elo_for(m["home"]), elo_for(m["away"]))
     favored = m["home"] if p >= 0.5 else m["away"]
     fav_p = max(p, 1 - p)
@@ -651,7 +711,7 @@ ul.match-list {{ list-style: none; padding-left: 0; }}
 
 <div class="tab-pane predictions" id="pane-predictions">
   <h2>How predictions work</h2>
-  <p class="subtitle">Each completed match updates a margin-weighted <strong>Elo rating</strong> for both teams. A 7-0 sweep moves ratings ~1.6× as much as a 4-3 squeaker. The predicted win probability for any future match is computed from the rating gap: a 100-point gap implies ~64%, 200 points ~76%, 400 points ~91%. Teams with fewer than {LOW_CONFIDENCE_GAMES} completed games are flagged with <code>*</code> — predictions involving them carry low confidence.</p>
+  <p class="subtitle">Each tennis dual meet is treated as 7 independent line matches (a 7-0 sweep contributes 7 line-wins, a 4-3 contributes 4 wins and 3 losses). Ratings are computed via <strong>Bradley-Terry maximum-likelihood estimation</strong> — solving simultaneously for the team strengths that best explain every line outcome. This is mathematically optimal for transitive "common opponent" reasoning: if BH beat Roxbury Latin 4-3 and RL beat St. George's 9-0, the model heavily weights the implied BH-vs-SG strength gap even though BH and SG haven't played. The win probability for any future match comes from the rating gap on a 400-point logistic scale (100 pts ≈ 64%, 200 pts ≈ 76%, 400 pts ≈ 91%). Teams with fewer than {LOW_CONFIDENCE_GAMES} completed games are flagged with <code>*</code> — predictions involving them carry low confidence.</p>
 
   <h2>Belmont Hill — Upcoming Matches</h2>
   <table>
@@ -659,14 +719,7 @@ ul.match-list {{ list-style: none; padding-left: 0; }}
     <tbody>{render_predictions_list(bh_preds, show_bh_perspective=True)}</tbody>
   </table>
 
-  <h2>Closest Upcoming Matches Across the League</h2>
-  <p class="subtitle">Sorted by closeness — these are the most uncertain (and most interesting) games on the schedule.</p>
-  <table>
-    <thead><tr><th style="width:120px;">Date</th><th>Matchup</th><th style="width:240px;">Predicted Outcome</th></tr></thead>
-    <tbody>{render_predictions_list(closest_preds)}</tbody>
-  </table>
-
-  <p class="note">Caveat: Elo doesn't know about graduating seniors, injuries, or specific lineup matchups. It only sees results. Class A schools that play primarily in the Founders League / Eight Schools have less ISL data — so cross-conference matchups (e.g., Brunswick vs Nobles in the NEPSAC final) are noisier than intra-ISL predictions.</p>
+  <p class="note">Caveat: ratings don't know about graduating seniors, injuries, or specific lineup matchups. They only see results. Class A schools that play primarily in the Founders League / Eight Schools have less ISL data — so cross-conference matchups (e.g., Brunswick vs Nobles in the NEPSAC final) are noisier than intra-ISL predictions.</p>
 </div>
 
 <div class="footer">
