@@ -336,11 +336,10 @@ def standings_table(standings, show_elo=True):
     return rows
 
 def h2h_matrix(standings, h2h, scheduled, label_col_name="Record"):
-    full_to_short = {s["full"]: s.get("abbr", s["short"]) for s in standings}
     ordered = [s["full"] for s in standings]
     head = '<tr><th class="row-head">Team</th>'
     for f in ordered:
-        head += f'<th><div class="col-label">{full_to_short[f]}</div></th>'
+        head += f'<th><div class="col-label">{f}</div></th>'
     head += f'<th>{label_col_name}</th></tr>'
     body = ""
     for i, full in enumerate(ordered):
@@ -603,9 +602,9 @@ tr.tier-champ td:first-child {{ color: var(--crimson); font-weight: 700; }}
 .badge.close-badge {{ background: var(--close-bg); color: var(--close-fg); margin-left: 6px; }}
 .matrix-wrap {{ overflow-x: auto; }}
 table.matrix {{ font-size: 11px; table-layout: fixed; min-width: 900px; }}
-table.matrix th {{ font-size: 10px; padding: 4px 4px; vertical-align: bottom; height: 110px; white-space: nowrap; text-align: center; background: var(--crimson); }}
+table.matrix th {{ font-size: 10px; padding: 4px 4px; vertical-align: bottom; height: 200px; text-align: center; background: var(--crimson); }}
 table.matrix th.row-head {{ vertical-align: middle; height: auto; padding: 8px 10px; text-align: left; }}
-.col-label {{ writing-mode: vertical-rl; transform: rotate(180deg); display: inline-block; padding: 6px 0; }}
+.col-label {{ writing-mode: vertical-rl; transform: rotate(180deg); display: inline-block; padding: 6px 0; max-height: 190px; white-space: normal; line-height: 1.15; word-spacing: 1px; }}
 table.matrix td {{ text-align: center; padding: 6px 3px; border: 1px solid #EEE; font-weight: 600; }}
 table.matrix td.diag {{ background: #F0F0F0; color: #BBB; }}
 table.matrix td.empty {{ background: white; color: #DDD; }}
