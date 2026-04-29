@@ -239,11 +239,13 @@ def build_standings(record, pool_meta):
             "full": full,
             "short": meta["short"],
             "abbr": meta.get("abbr", meta["short"]),
+            "url": meta.get("url"),
             "w": r["w"], "l": r["l"], "t": r["t"], "pct": pct, "total": total,
             "elo": elo_for(full),
             "elo_games": games_for(full),
         })
-    out.sort(key=lambda d: (-d["pct"], -d["w"], d["l"], d["short"]))
+    # Sort by Elo descending (with low-confidence teams demoted via games count tiebreaker)
+    out.sort(key=lambda d: (-d["elo"], -d["elo_games"], d["short"]))
     return out
 
 isl_standings = build_standings(isl_record, ISL_SCHOOLS)
@@ -259,6 +261,7 @@ for full, meta in ALL_CLASS_A.items():
         "full": full,
         "short": meta["short"],
         "abbr": meta.get("abbr", meta["short"]),
+        "url": meta.get("url"),
         "in_isl": full in ISL_FULL,
         "a_w": ca_only["w"], "a_l": ca_only["l"],
         "a_pct": ca_only["w"] / (ca_only["w"] + ca_only["l"]) if (ca_only["w"] + ca_only["l"]) else 0,
@@ -266,7 +269,8 @@ for full, meta in ALL_CLASS_A.items():
         "elo": elo_for(full),
         "elo_games": games_for(full),
     })
-ca_combined.sort(key=lambda x: (-x["a_pct"], -x["a_w"], x["a_l"], -x["ovr_w"], x["ovr_l"], x["short"]))
+# Sort by Elo descending (low-confidence teams demoted via games tiebreaker)
+ca_combined.sort(key=lambda x: (-x["elo"], -x["elo_games"], x["short"]))
 
 # ============================
 # Helpers
@@ -308,6 +312,12 @@ def h2h_cell(team_full, opp_full, h2h, scheduled):
         return f'<td class="upcoming" title="Scheduled: {date}. Win probability {pct_str}">{short_date(date)} · {pct_str}</td>'
     return '<td class="empty"></td>'
 
+def school_link(s):
+    """Render a school's short name as a link to its boys-tennis page if a URL is on file."""
+    if s.get("url"):
+        return f'<a href="{s["url"]}" target="_blank" rel="noopener">{s["short"]}</a>'
+    return s["short"]
+
 def standings_table(standings, show_elo=True):
     rows = ""
     total = len(standings)
@@ -322,7 +332,7 @@ def standings_table(standings, show_elo=True):
             elo = round(s["elo"])
             lc = '*' if low_confidence(s["full"]) else ''
             elo_cell = f'<td><strong>{elo}{lc}</strong></td>'
-        rows += f'<tr class="{cls}"><td>{i}</td><td>{s["short"]}</td><td>{rec}</td><td>{pct}</td>{elo_cell}<td><span class="tier tier-{tier}">{tier}</span></td></tr>\n'
+        rows += f'<tr class="{cls}"><td>{i}</td><td>{school_link(s)}</td><td>{rec}</td><td>{pct}</td>{elo_cell}<td><span class="tier tier-{tier}">{tier}</span></td></tr>\n'
     return rows
 
 def h2h_matrix(standings, h2h, scheduled, label_col_name="Record"):
@@ -354,7 +364,7 @@ for i, s in enumerate(ca_combined, 1):
     isl_badge = ' <span class="badge isl-badge">ISL</span>' if s["in_isl"] else ''
     elo = round(s["elo"])
     lc = '*' if low_confidence(s["full"]) else ''
-    ca_table_rows += f'<tr class="{cls}"><td>{i}</td><td>{s["short"]}{isl_badge}</td><td>{a_rec}</td><td>{a_pct}</td><td>{ovr}</td><td><strong>{elo}{lc}</strong></td></tr>\n'
+    ca_table_rows += f'<tr class="{cls}"><td>{i}</td><td>{school_link(s)}{isl_badge}</td><td>{a_rec}</td><td>{a_pct}</td><td>{ovr}</td><td><strong>{elo}{lc}</strong></td></tr>\n'
 
 ca_matrix_standings = []
 for s in ca_combined:
@@ -498,9 +508,13 @@ def get_predictions(team_pool=None):
 # All upcoming matches involving any ISL team (most relevant to BH)
 all_preds = get_predictions(ISL_FULL | CLASS_A_FULL)
 
+# Filter all predictions to today-or-later (we never want to "predict" a past date)
+today_date = datetime.today().date()
+all_preds = [p for p in all_preds if datetime.strptime(p["date"], "%m/%d/%Y").date() >= today_date]
+
 # Closest upcoming matches (most uncertain — most interesting)
 closest_preds = sorted(all_preds, key=lambda p: (p["closeness"], datetime.strptime(p["date"], "%m/%d/%Y")))[:8]
-# Upcoming BH-specific
+# Upcoming BH-specific (today or later)
 bh_preds = sorted([p for p in all_preds if p["home"] == "Belmont Hill" or p["away"] == "Belmont Hill"],
                   key=lambda p: datetime.strptime(p["date"], "%m/%d/%Y"))
 
@@ -575,6 +589,8 @@ h3 {{ font-family: 'Inter', sans-serif; font-size: 16px; color: var(--navy); mar
 table {{ width: 100%; border-collapse: collapse; font-size: 14px; background: white; margin: 16px 0 8px; }}
 th {{ background: var(--crimson); color: white; padding: 12px 10px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }}
 td {{ padding: 11px 10px; border-bottom: 1px solid #EEE; vertical-align: middle; }}
+td a {{ color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(34,45,101,0.35); transition: border-color 0.15s; }}
+td a:hover {{ color: var(--crimson); border-bottom-color: var(--crimson); }}
 tr.bh-row td {{ background: #FFF5F7; color: var(--crimson); font-weight: 700; }}
 tr.tier-champ td:first-child {{ color: var(--crimson); font-weight: 700; }}
 .tier {{ display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }}
@@ -620,23 +636,9 @@ ul.match-list {{ list-style: none; padding-left: 0; }}
 <div class="crimson-rule"></div>
 <p class="dateline">As of {today} · {total_completed} matches played · {total_scheduled} remaining</p>
 
-<div class="cards">
-  <div class="card">
-    <div class="label">ISL Co-Leaders</div>
-    <div class="value" style="font-size:22px;">{co_leader_names}</div>
-    <div class="meta">Both undefeated; meet in regular-season finale</div>
-  </div>
-  <div class="card">
-    <div class="label">Top Elo Ratings</div>
-    <div class="value" style="font-size:14px;line-height:1.4;">{top_elo_names}</div>
-    <div class="meta">Margin-weighted Elo from completed matches</div>
-  </div>
-</div>
-
 <div class="tabs" role="tablist">
   <div class="tab active" data-tab="isl" role="tab">ISL Only <span class="count">16</span></div>
   <div class="tab" data-tab="classa" role="tab">NEPSAC Class A <span class="count">18</span></div>
-  <div class="tab" data-tab="total" role="tab">Total Record <span class="count">16</span></div>
   <div class="tab" data-tab="predictions" role="tab">Predictions</div>
 </div>
 
@@ -662,6 +664,12 @@ ul.match-list {{ list-style: none; padding-left: 0; }}
   <table>
     <thead><tr><th style="width:120px;">Date</th><th style="width:90px;">Home/Away</th><th>Opponent</th><th style="width:120px;">Score</th><th style="width:80px;">Result</th><th style="width:110px;">BH Win Prob</th></tr></thead>
     <tbody>{bh_match_rows}</tbody>
+  </table>
+
+  <h2>Recent Results Across the League</h2>
+  <table>
+    <thead><tr><th style="width:120px;">Date</th><th>Winner</th><th></th><th>Loser</th><th style="width:90px;">Score</th></tr></thead>
+    <tbody>{recent_rows}</tbody>
   </table>
 </div>
 
@@ -692,21 +700,6 @@ ul.match-list {{ list-style: none; padding-left: 0; }}
       <ul class="match-list">{ca_upcoming_li}</ul>
     </div>
   </div>
-</div>
-
-<div class="tab-pane" id="pane-total">
-  <h2>Total / Overall Records</h2>
-  <p class="subtitle">Every ISL school's full record vs ANY opponent (includes ISL matches plus non-ISL games).</p>
-  <table>
-    <thead><tr><th style="width:50px;">#</th><th>School</th><th style="width:130px;">Overall Record</th><th style="width:90px;">Win %</th><th style="width:80px;">Elo</th><th style="width:140px;">Tier</th></tr></thead>
-    <tbody>{standings_table(total_standings)}</tbody>
-  </table>
-
-  <h2>Recent Results Across the League</h2>
-  <table>
-    <thead><tr><th style="width:120px;">Date</th><th>Winner</th><th></th><th>Loser</th><th style="width:90px;">Score</th></tr></thead>
-    <tbody>{recent_rows}</tbody>
-  </table>
 </div>
 
 <div class="tab-pane predictions" id="pane-predictions">
@@ -766,7 +759,12 @@ with open(LEGACY_OUTPUT, "w") as f:
 print(f"Wrote {OUTPUT} ({len(html):,} chars)")
 print(f"Wrote {LEGACY_OUTPUT} (redirect to index.html)")
 print(f"  Matches: {total_completed} completed, {total_scheduled} scheduled")
-print(f"  ISL leader(s): {co_leader_names}")
-print(f"  Top Elo (3+ games): {top_elo_names}")
+top3 = [s for s in isl_standings if s["elo_games"] >= LOW_CONFIDENCE_GAMES][:3]
+if top3:
+    print(f"  Top Elo: " + " · ".join(f"{s['short']} ({round(s['elo'])})" for s in top3))
 if bh_preds:
-    print(f"  BH next match: {bh_preds[0]['date']} vs {bh_preds[0]['away'] if bh_preds[0]['home']=='Belmont Hill' else bh_preds[0]['home']}")
+    nxt = bh_preds[0]
+    opp = nxt['away'] if nxt['home'] == 'Belmont Hill' else nxt['home']
+    print(f"  BH next match: {nxt['date']} vs {opp} (BH win prob {format_pct(win_probability(elo_for('Belmont Hill'), elo_for(opp)))})")
+else:
+    print("  BH next match: none (season complete)")

@@ -953,13 +953,6 @@
     },
     {
       "date": "04/25/2026",
-      "home": "Belmont Hill",
-      "away": "St. Mark's",
-      "status": "scheduled",
-      "source": "isl_feed"
-    },
-    {
-      "date": "04/25/2026",
       "home": "Phillips Exeter Academy",
       "away": "Northfield Mt. Hermon",
       "status": "completed",
@@ -1136,28 +1129,10 @@
     },
     {
       "date": "05/02/2026",
-      "home": "Belmont Hill",
-      "away": "St. Mark's",
-      "status": "completed",
-      "source": "manual",
-      "home_score": 7,
-      "away_score": 0
-    },
-    {
-      "date": "05/02/2026",
       "home": "St. John's Preparatory School",
       "away": "Phillips Exeter Academy",
       "status": "scheduled",
       "source": "exeter_site"
-    },
-    {
-      "date": "05/03/2026",
-      "home": "SomeRandomSchool",
-      "away": "Belmont Hill",
-      "status": "completed",
-      "source": "manual",
-      "home_score": 4,
-      "away_score": 3
     },
     {
       "date": "05/04/2026",
