@@ -113,6 +113,13 @@
       "source": "isl_feed"
     },
     {
+      "date": "04/01/2026",
+      "home": "Taft School",
+      "away": "Avon Old Farms",
+      "status": "scheduled",
+      "source": "avon_site"
+    },
+    {
       "date": "04/02/2026",
       "home": "Noble & Greenough",
       "away": "Phillips Academy Andover",
@@ -199,6 +206,15 @@
       "away_score": 7,
       "status": "completed",
       "source": "isl_feed,bh_site"
+    },
+    {
+      "date": "04/04/2026",
+      "home": "Avon Old Farms",
+      "away": "Kent School",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 7,
+      "away_score": 0
     },
     {
       "date": "04/06/2026",
@@ -325,6 +341,15 @@
       "source": "isl_feed"
     },
     {
+      "date": "04/08/2026",
+      "home": "Avon Old Farms",
+      "away": "Canterbury School",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 7,
+      "away_score": 0
+    },
+    {
       "date": "04/09/2026",
       "home": "Rye CDS",
       "away": "Hopkins School",
@@ -412,7 +437,7 @@
       "home_score": 4,
       "away_score": 3,
       "status": "completed",
-      "source": "loomis_site"
+      "source": "loomis_site,avon_site"
     },
     {
       "date": "04/11/2026",
@@ -602,6 +627,15 @@
       "source": "exeter_site"
     },
     {
+      "date": "04/15/2026",
+      "home": "Avon Old Farms",
+      "away": "Trinity-Pawling",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 7,
+      "away_score": 0
+    },
+    {
       "date": "04/17/2026",
       "home": "Buckingham Browne & Nichols",
       "away": "Rivers School",
@@ -717,6 +751,15 @@
       "source": "isl_feed"
     },
     {
+      "date": "04/18/2026",
+      "home": "Avon Old Farms",
+      "away": "Salisbury School",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 4,
+      "away_score": 3
+    },
+    {
       "date": "04/20/2026",
       "home": "Governor's Academy",
       "away": "Brooks",
@@ -731,6 +774,15 @@
       "away_score": 3,
       "status": "completed",
       "source": "brunswick_site"
+    },
+    {
+      "date": "04/20/2026",
+      "home": "Avon Old Farms",
+      "away": "Kingswood-Oxford",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 0,
+      "away_score": 5
     },
     {
       "date": "04/21/2026",
@@ -857,6 +909,15 @@
       "away_score": 6
     },
     {
+      "date": "04/22/2026",
+      "home": "Avon Old Farms",
+      "away": "Pomfret School",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 5,
+      "away_score": 0
+    },
+    {
       "date": "04/24/2026",
       "home": "Belmont Hill",
       "away": "St. Mark's",
@@ -961,6 +1022,15 @@
       "away_score": 0
     },
     {
+      "date": "04/25/2026",
+      "home": "Suffield Academy",
+      "away": "Avon Old Farms",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 0,
+      "away_score": 7
+    },
+    {
       "date": "04/27/2026",
       "home": "Hopkins School",
       "away": "St. Luke's",
@@ -993,6 +1063,15 @@
       "source": "nobles,nobles_site,andover_site",
       "home_score": 5,
       "away_score": 2
+    },
+    {
+      "date": "04/27/2026",
+      "home": "Cheshire Academy",
+      "away": "Avon Old Farms",
+      "status": "completed",
+      "source": "avon_site",
+      "home_score": 1,
+      "away_score": 4
     },
     {
       "date": "04/29/2026",
@@ -1065,6 +1144,13 @@
       "source": "exeter_site"
     },
     {
+      "date": "04/29/2026",
+      "home": "Avon Old Farms",
+      "away": "Hotchkiss School",
+      "status": "scheduled",
+      "source": "avon_site"
+    },
+    {
       "date": "05/01/2026",
       "home": "Phillips Academy Andover",
       "away": "Roxbury Latin School",
@@ -1135,6 +1221,13 @@
       "source": "exeter_site"
     },
     {
+      "date": "05/02/2026",
+      "home": "Williston Northampton School",
+      "away": "Avon Old Farms",
+      "status": "scheduled",
+      "source": "avon_site"
+    },
+    {
       "date": "05/04/2026",
       "home": "Noble & Greenough",
       "away": "Lawrence Academy",
@@ -1161,6 +1254,13 @@
       "away": "Moses Brown High School",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "05/04/2026",
+      "home": "Avon Old Farms",
+      "away": "Taft School",
+      "status": "scheduled",
+      "source": "avon_site"
     },
     {
       "date": "05/06/2026",
@@ -1219,6 +1319,13 @@
       "away": "Milton Academy",
       "status": "scheduled",
       "source": "exeter_site"
+    },
+    {
+      "date": "05/06/2026",
+      "home": "Westminster School",
+      "away": "Avon Old Farms",
+      "status": "scheduled",
+      "source": "avon_site"
     },
     {
       "date": "05/08/2026",
@@ -1296,6 +1403,13 @@
       "away": "Deerfield Academy",
       "status": "scheduled",
       "source": "exeter_site"
+    },
+    {
+      "date": "05/09/2026",
+      "home": "Avon Old Farms",
+      "away": "Frederick Gunn School",
+      "status": "scheduled",
+      "source": "avon_site"
     },
     {
       "date": "05/11/2026",
@@ -1380,6 +1494,13 @@
       "away": "Roxbury Latin School",
       "status": "scheduled",
       "source": "isl_feed,rl_site"
+    },
+    {
+      "date": "05/13/2026",
+      "home": "Avon Old Farms",
+      "away": "Berkshire School",
+      "status": "scheduled",
+      "source": "avon_site"
     },
     {
       "date": "05/15/2026",
@@ -1500,6 +1621,13 @@
       "away": "St. Mark's",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "05/20/2026",
+      "home": "Choate Rosemary Hall",
+      "away": "Avon Old Farms",
+      "status": "scheduled",
+      "source": "avon_site"
     },
     {
       "date": "05/22/2026",

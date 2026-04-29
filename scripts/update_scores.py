@@ -36,6 +36,7 @@ sys.path.insert(0, HERE)
 
 from fetch_rschooltoday import fetch_widget_matches  # noqa: E402
 from fetch_sidearm import fetch_sidearm_matches  # noqa: E402
+from fetch_veracross import fetch_veracross_matches  # noqa: E402
 
 MATCHES_PATH = os.path.join(ROOT, "data", "matches.json")
 SCHOOLS_PATH = os.path.join(ROOT, "data", "schools.json")
@@ -81,6 +82,21 @@ SOURCES = [
             source="exeter_site",
         ),
     },
+    # Tier 2: Veracross ICS calendar feeds (Founders League / Class A schools).
+    # Each entry needs the school's public Veracross ICS URL, found on the
+    # school's varsity-tennis page as the "Add to Calendar" button. Token in
+    # the URL is required and read-only — Veracross rotates them rarely.
+    {
+        "name": "Avon Old Farms (Veracross)",
+        "tier": "home_site",
+        "tag": "avon_site",
+        "owner": "Avon Old Farms",
+        "fetcher": lambda: fetch_veracross_matches(
+            "Avon Old Farms",
+            "https://api.veracross.com/aof/teams/53213.ics?t=f9670b44377f86c7036573244cd939a5&uid=2C49F278-5AF8-46FE-8032-1D347AA25245",
+            source="avon_site",
+        ),
+    },
 ]
 
 
@@ -109,6 +125,11 @@ def load_aliases() -> tuple[set, dict]:
     aliases.setdefault("Brooks School", "Brooks")
     aliases.setdefault("Buckingham Browne & Nichols School", "Buckingham Browne & Nichols")
     aliases.setdefault("Noble and Greenough School", "Noble & Greenough")
+    aliases.setdefault("Kingswood Oxford School", "Kingswood-Oxford")
+    aliases.setdefault("Kingswood-Oxford School", "Kingswood-Oxford")
+    aliases.setdefault("Hotchkiss", "Hotchkiss School")
+    aliases.setdefault("The Hotchkiss School", "Hotchkiss School")
+    aliases.setdefault("Trinity-Pawling School", "Trinity-Pawling")
     return canon, aliases
 
 
@@ -333,6 +354,38 @@ def merge(rows: list[dict], db: dict, canonical: set, aliases: dict) -> dict:
     for m in matches:
         m.pop("_tier", None)
 
+    # Post-merge cleanup: drop scheduled entries that duplicate a completed
+    # match between the same two teams within a 7-day window. This handles
+    # the common case where a league feed lists a match on its OFFICIAL date
+    # but the team's home site reports the actual played date a day off.
+    completed_index = {}
+    for m in matches:
+        if m.get("status") != "completed":
+            continue
+        teams = frozenset((m["home"], m["away"]))
+        d = datetime.strptime(m["date"], "%m/%d/%Y").date()
+        completed_index.setdefault(teams, []).append(d)
+
+    def _is_phantom(m):
+        if m.get("status") == "completed":
+            return False
+        teams = frozenset((m["home"], m["away"]))
+        if teams not in completed_index:
+            return False
+        d = datetime.strptime(m["date"], "%m/%d/%Y").date()
+        return any(abs((d - cd).days) <= 7 for cd in completed_index[teams])
+
+    before = len(matches)
+    dropped = [m for m in matches if _is_phantom(m)]
+    matches = [m for m in matches if not _is_phantom(m)]
+    if dropped:
+        stats.setdefault("details", {}).setdefault("dropped_phantoms", [])
+        for m in dropped:
+            stats["details"]["dropped_phantoms"].append(
+                f"{m['date']}: {m['home']} vs {m['away']} (already completed within 7d)"
+            )
+        stats["dropped_phantoms"] = len(dropped)
+
     matches.sort(key=lambda m: datetime.strptime(m["date"], "%m/%d/%Y"))
     db["matches"] = matches
     db["_last_updated"] = datetime.now().strftime("%Y-%m-%d")
@@ -372,6 +425,10 @@ def print_summary(stats: dict, log: list[dict], dry_run: bool) -> None:
     for d in stats["details"]["skipped_low_precedence"]:
         print(f"    · {d}")
     print(f"  new scheduled  : {stats['added_scheduled']}")
+    if stats.get("dropped_phantoms"):
+        print(f"  dropped phantoms: {stats['dropped_phantoms']}")
+        for d in stats["details"].get("dropped_phantoms", [])[:5]:
+            print(f"    × {d}")
 
 
 def main(argv: list[str]) -> int:
