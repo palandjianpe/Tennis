@@ -1,0 +1,4 @@
+timestamp,source,tier,status,rows,note
+2026-04-29T14:34:14,manual_scores.csv,manual,ok,3,
+2026-04-29T14:34:14,ISL boys tennis widget,league_feed,ok,136,
+2026-04-29T14:34:16,Phillips Exeter (SIDEARM),home_site,ok,13,

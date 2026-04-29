@@ -1,0 +1,12 @@
+date,home,home_score,away,away_score,note
+# Append-only manual overrides. Lines beginning with # are ignored.
+# Format: MM/DD/YYYY,Home Team,HomeScore,Away Team,AwayScore,note
+# Manual rows always WIN over scraped data when there's a conflict.
+# Use scripts/log.py to add a line, or just append directly.
+#
+# Examples:
+# 05/02/2026,Brunswick School,6,Choate Rosemary Hall,1,heard from coach
+# 05/06/2026,Belmont Hill,5,Noble & Greenough,2,scoreboard at the courts
+05/02/2026,Belmont Hill,7,St. Mark's,0,
+05/06/2026,Belmont Hill,5,Noble & Greenough,2,imagined match
+05/03/2026,SomeRandomSchool,4,Belmont Hill,3,
