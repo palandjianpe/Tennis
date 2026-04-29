@@ -37,6 +37,8 @@ sys.path.insert(0, HERE)
 from fetch_rschooltoday import fetch_widget_matches  # noqa: E402
 from fetch_sidearm import fetch_sidearm_matches  # noqa: E402
 from fetch_veracross import fetch_veracross_matches  # noqa: E402
+from fetch_finalsite import fetch_finalsite_matches  # noqa: E402
+from fetch_andover import fetch_andover_matches  # noqa: E402
 
 MATCHES_PATH = os.path.join(ROOT, "data", "matches.json")
 SCHOOLS_PATH = os.path.join(ROOT, "data", "schools.json")
@@ -97,6 +99,101 @@ SOURCES = [
             source="avon_site",
         ),
     },
+    # Tier 2: SIDEARM-standard schedule pages (continued).
+    {
+        "name": "St. Paul's School (SIDEARM)",
+        "tier": "home_site",
+        "tag": "sps_site",
+        "owner": "St. Paul's School",
+        "fetcher": lambda: fetch_sidearm_matches(
+            "St. Paul's School",
+            "https://athletics.sps.edu/sports/boys-tennis/schedule",
+            season_year=2026,
+            source="sps_site",
+        ),
+    },
+    # Tier 2: FinalSite athletics composites. The same parser handles every
+    # school that hosts on FinalSite's athletics CMS. Adding a new school is
+    # one line: just give it a name, owner, URL, and source tag. Some FinalSite
+    # pages cap the initial render at 5-6 events (Choate, NMH) — their pages
+    # have a "Load More" button that requires JS, so we get a partial schedule.
+    # If you need the full set, write down the missing matches in manual_scores.csv.
+    {
+        "name": "Loomis Chaffee (FinalSite)",
+        "tier": "home_site",
+        "tag": "loomis_site",
+        "owner": "Loomis Chaffee",
+        "fetcher": lambda: fetch_finalsite_matches(
+            "Loomis Chaffee",
+            "https://www.loomischaffee.org/athletics/teams/spring/tennis/boys",
+            season_year=2026, source="loomis_site",
+        ),
+    },
+    {
+        "name": "Northfield Mt. Hermon (FinalSite)",
+        "tier": "home_site",
+        "tag": "nmh_site",
+        "owner": "Northfield Mt. Hermon",
+        "fetcher": lambda: fetch_finalsite_matches(
+            "Northfield Mt. Hermon",
+            "https://www.nmhschool.org/athletics-home/programs/boys/tennis",
+            season_year=2026, source="nmh_site",
+        ),
+    },
+    {
+        "name": "Hotchkiss School (FinalSite)",
+        "tier": "home_site",
+        "tag": "hotchkiss_site",
+        "owner": "Hotchkiss School",
+        "fetcher": lambda: fetch_finalsite_matches(
+            "Hotchkiss School",
+            "https://www.hotchkiss.org/athletics/our-teams/boys-tennis/varsity",
+            season_year=2026, source="hotchkiss_site",
+        ),
+    },
+    {
+        "name": "Choate Rosemary Hall (FinalSite, partial)",
+        "tier": "home_site",
+        "tag": "choate_site",
+        "owner": "Choate Rosemary Hall",
+        "fetcher": lambda: fetch_finalsite_matches(
+            "Choate Rosemary Hall",
+            "https://www.choate.edu/athletics/teams-programs/spring/tennis/~athletics-team-id/276",
+            season_year=2026, source="choate_site",
+        ),
+    },
+    {
+        "name": "Kent School (FinalSite)",
+        "tier": "home_site",
+        "tag": "kent_site",
+        "owner": "Kent School",
+        "fetcher": lambda: fetch_finalsite_matches(
+            "Kent School",
+            "https://www.kent-school.edu/athletics/teams-schedules/boys-tennis",
+            season_year=2026, source="kent_site",
+        ),
+    },
+    {
+        "name": "Brunswick School (FinalSite)",
+        "tier": "home_site",
+        "tag": "brunswick_site",
+        "owner": "Brunswick School",
+        "fetcher": lambda: fetch_finalsite_matches(
+            "Brunswick School",
+            "https://my.brunswickschool.org/athletics/team/~athletics-team-id/231",
+            season_year=2026, source="brunswick_site",
+        ),
+    },
+    # Custom: Phillips Academy Andover. Their CMS only renders UPCOMING events
+    # in static HTML — past results require JS to populate. So this fetcher
+    # contributes the schedule only; scores need manual entry.
+    {
+        "name": "Phillips Academy Andover (custom; schedule only)",
+        "tier": "home_site",
+        "tag": "andover_site",
+        "owner": "Phillips Academy Andover",
+        "fetcher": lambda: fetch_andover_matches(season_year=2026),
+    },
 ]
 
 
@@ -130,6 +227,22 @@ def load_aliases() -> tuple[set, dict]:
     aliases.setdefault("Hotchkiss", "Hotchkiss School")
     aliases.setdefault("The Hotchkiss School", "Hotchkiss School")
     aliases.setdefault("Trinity-Pawling School", "Trinity-Pawling")
+    aliases.setdefault("Avon Old Farms School", "Avon Old Farms")
+    aliases.setdefault("Choate", "Choate Rosemary Hall")
+    aliases.setdefault("Choate Rosemary Hall School", "Choate Rosemary Hall")
+    aliases.setdefault("Hopkins", "Hopkins School")
+    aliases.setdefault("The Hopkins School", "Hopkins School")
+    aliases.setdefault("Taft", "Taft School")
+    aliases.setdefault("The Taft School", "Taft School")
+    aliases.setdefault("Westminster", "Westminster School")
+    aliases.setdefault("Berkshire", "Berkshire School")
+    aliases.setdefault("Salisbury", "Salisbury School")
+    aliases.setdefault("Suffield", "Suffield Academy")
+    aliases.setdefault("Pomfret", "Pomfret School")
+    aliases.setdefault("Frederick Gunn", "Frederick Gunn School")
+    aliases.setdefault("Williston Northampton", "Williston Northampton School")
+    aliases.setdefault("Cheshire", "Cheshire Academy")
+    aliases.setdefault("Canterbury", "Canterbury School")
     return canon, aliases
 
 

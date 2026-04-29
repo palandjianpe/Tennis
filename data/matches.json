@@ -36,6 +36,13 @@
       "source": "brunswick_site,rl_site,isl_feed"
     },
     {
+      "date": "03/27/2026",
+      "home": "Lawrenceville",
+      "away": "Hotchkiss School",
+      "status": "scheduled",
+      "source": "hotchkiss_site"
+    },
+    {
       "date": "03/28/2026",
       "home": "Austin Preparatory",
       "away": "Thayer Academy",
@@ -49,7 +56,7 @@
       "home_score": 7,
       "away_score": 0,
       "status": "completed",
-      "source": "phillipian_2026-04-03,andover_site"
+      "source": "phillipian_2026-04-03,andover_site,brunswick_site"
     },
     {
       "date": "03/28/2026",
@@ -57,6 +64,13 @@
       "away": "Tabor Academy",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "03/31/2026",
+      "home": "New Canaan",
+      "away": "Brunswick School",
+      "status": "scheduled",
+      "source": "brunswick_site"
     },
     {
       "date": "04/01/2026",
@@ -83,7 +97,7 @@
       "home_score": 4,
       "away_score": 0,
       "status": "completed",
-      "source": "loomis_site"
+      "source": "loomis_site,kent_site"
     },
     {
       "date": "04/01/2026",
@@ -118,6 +132,22 @@
       "away": "Avon Old Farms",
       "status": "scheduled",
       "source": "avon_site"
+    },
+    {
+      "date": "04/01/2026",
+      "home": "Choate Rosemary Hall",
+      "away": "Westminster School",
+      "status": "completed",
+      "source": "choate_site",
+      "home_score": 4,
+      "away_score": 3
+    },
+    {
+      "date": "04/01/2026",
+      "home": "Greenwich",
+      "away": "Brunswick School",
+      "status": "scheduled",
+      "source": "brunswick_site"
     },
     {
       "date": "04/02/2026",
@@ -217,6 +247,24 @@
       "away_score": 0
     },
     {
+      "date": "04/04/2026",
+      "home": "Deerfield Academy",
+      "away": "St. Paul's School",
+      "status": "completed",
+      "source": "sps_site",
+      "home_score": 4,
+      "away_score": 3
+    },
+    {
+      "date": "04/04/2026",
+      "home": "Northfield Mt. Hermon",
+      "away": "Vermont Academy",
+      "status": "completed",
+      "source": "nmh_site",
+      "home_score": 2,
+      "away_score": 5
+    },
+    {
       "date": "04/06/2026",
       "home": "Middlesex",
       "away": "Governor's Academy",
@@ -266,7 +314,7 @@
       "home_score": 6,
       "away_score": 1,
       "status": "completed",
-      "source": "hopkins_site"
+      "source": "hopkins_site,kent_site"
     },
     {
       "date": "04/08/2026",
@@ -284,7 +332,7 @@
       "home_score": 3,
       "away_score": 4,
       "status": "completed",
-      "source": "loomis_site"
+      "source": "loomis_site,choate_site"
     },
     {
       "date": "04/08/2026",
@@ -302,7 +350,7 @@
       "home_score": 7,
       "away_score": 0,
       "status": "completed",
-      "source": "exeter_site"
+      "source": "exeter_site,sps_site"
     },
     {
       "date": "04/08/2026",
@@ -350,6 +398,15 @@
       "away_score": 0
     },
     {
+      "date": "04/08/2026",
+      "home": "Taft School",
+      "away": "Hotchkiss School",
+      "status": "completed",
+      "source": "hotchkiss_site",
+      "home_score": 2,
+      "away_score": 4
+    },
+    {
       "date": "04/09/2026",
       "home": "Rye CDS",
       "away": "Hopkins School",
@@ -386,6 +443,24 @@
       "away_score": 4
     },
     {
+      "date": "04/10/2026",
+      "home": "St. Paul's School",
+      "away": "Worcester Academy",
+      "status": "completed",
+      "source": "sps_site",
+      "home_score": 9,
+      "away_score": 0
+    },
+    {
+      "date": "04/10/2026",
+      "home": "Salisbury School",
+      "away": "Hotchkiss School",
+      "status": "completed",
+      "source": "hotchkiss_site",
+      "home_score": 3,
+      "away_score": 4
+    },
+    {
       "date": "04/11/2026",
       "home": "Belmont Hill",
       "away": "Governor's Academy",
@@ -401,7 +476,7 @@
       "home_score": 7,
       "away_score": 0,
       "status": "completed",
-      "source": "brunswick_site"
+      "source": "brunswick_site,kent_site"
     },
     {
       "date": "04/11/2026",
@@ -489,9 +564,27 @@
       "home": "Choate Rosemary Hall",
       "away": "Phillips Exeter Academy",
       "status": "completed",
-      "source": "exeter_site",
+      "source": "exeter_site,choate_site",
       "home_score": 0,
       "away_score": 7
+    },
+    {
+      "date": "04/11/2026",
+      "home": "Austin Preparatory School",
+      "away": "St. Paul's School",
+      "status": "completed",
+      "source": "sps_site",
+      "home_score": 0,
+      "away_score": 9
+    },
+    {
+      "date": "04/11/2026",
+      "home": "Northfield Mt. Hermon",
+      "away": "Berkshire School",
+      "status": "completed",
+      "source": "nmh_site",
+      "home_score": 6,
+      "away_score": 1
     },
     {
       "date": "04/13/2026",
@@ -519,6 +612,15 @@
       "away_score": 3,
       "status": "completed",
       "source": "isl_feed"
+    },
+    {
+      "date": "04/13/2026",
+      "home": "St. Paul's School",
+      "away": "New Hampton School",
+      "status": "completed",
+      "source": "sps_site",
+      "home_score": 9,
+      "away_score": 0
     },
     {
       "date": "04/14/2026",
@@ -636,6 +738,49 @@
       "away_score": 0
     },
     {
+      "date": "04/15/2026",
+      "home": "Phillips Academy Andover",
+      "away": "St. Paul's School",
+      "status": "completed",
+      "source": "sps_site,OVERRIDDEN_BY:sps_site",
+      "home_score": 6,
+      "away_score": 3
+    },
+    {
+      "date": "04/15/2026",
+      "home": "Loomis Chaffee",
+      "away": "Deerfield Academy",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "04/15/2026",
+      "home": "Northfield Mt. Hermon",
+      "away": "Choate Rosemary Hall",
+      "status": "completed",
+      "source": "nmh_site",
+      "home_score": 0,
+      "away_score": 7
+    },
+    {
+      "date": "04/15/2026",
+      "home": "Westminster School",
+      "away": "Hotchkiss School",
+      "status": "completed",
+      "source": "hotchkiss_site",
+      "home_score": 1,
+      "away_score": 6
+    },
+    {
+      "date": "04/15/2026",
+      "home": "Kingswood-Oxford",
+      "away": "Kent School",
+      "status": "completed",
+      "source": "kent_site",
+      "home_score": 6,
+      "away_score": 1
+    },
+    {
       "date": "04/17/2026",
       "home": "Buckingham Browne & Nichols",
       "away": "Rivers School",
@@ -668,6 +813,15 @@
       "away_score": 4,
       "status": "completed",
       "source": "bh_site"
+    },
+    {
+      "date": "04/17/2026",
+      "home": "Kent School",
+      "away": "Hotchkiss School",
+      "status": "completed",
+      "source": "hotchkiss_site,kent_site",
+      "home_score": 0,
+      "away_score": 7
     },
     {
       "date": "04/18/2026",
@@ -758,6 +912,33 @@
       "source": "avon_site",
       "home_score": 4,
       "away_score": 3
+    },
+    {
+      "date": "04/18/2026",
+      "home": "Kimball Union Academy",
+      "away": "St. Paul's School",
+      "status": "completed",
+      "source": "sps_site",
+      "home_score": 0,
+      "away_score": 9
+    },
+    {
+      "date": "04/18/2026",
+      "home": "Trinity-Pawling",
+      "away": "Hotchkiss School",
+      "status": "completed",
+      "source": "hotchkiss_site",
+      "home_score": 0,
+      "away_score": 7
+    },
+    {
+      "date": "04/18/2026",
+      "home": "Kent School",
+      "away": "Taft School",
+      "status": "completed",
+      "source": "kent_site",
+      "home_score": 0,
+      "away_score": 7
     },
     {
       "date": "04/20/2026",
@@ -852,7 +1033,7 @@
       "home_score": 4,
       "away_score": 3,
       "status": "completed",
-      "source": "hopkins_site"
+      "source": "hopkins_site,hotchkiss_site"
     },
     {
       "date": "04/22/2026",
@@ -904,9 +1085,9 @@
       "home": "St. Paul's School",
       "away": "Phillips Exeter Academy",
       "status": "completed",
-      "source": "exeter_site",
-      "home_score": 1,
-      "away_score": 6
+      "source": "exeter_site,OVERRIDDEN_BY:sps_site",
+      "home_score": 0,
+      "away_score": 7
     },
     {
       "date": "04/22/2026",
@@ -916,6 +1097,33 @@
       "source": "avon_site",
       "home_score": 5,
       "away_score": 0
+    },
+    {
+      "date": "04/22/2026",
+      "home": "St. Paul's School",
+      "away": "Varsity Phillips Exeter Academy",
+      "status": "completed",
+      "source": "sps_site",
+      "home_score": 1,
+      "away_score": 6
+    },
+    {
+      "date": "04/22/2026",
+      "home": "Williston Northampton School",
+      "away": "Loomis Chaffee",
+      "status": "completed",
+      "source": "loomis_site",
+      "home_score": 0,
+      "away_score": 6
+    },
+    {
+      "date": "04/22/2026",
+      "home": "Kent School",
+      "away": "Berkshire School",
+      "status": "completed",
+      "source": "kent_site",
+      "home_score": 0,
+      "away_score": 7
     },
     {
       "date": "04/24/2026",
@@ -951,7 +1159,7 @@
       "home_score": 2,
       "away_score": 5,
       "status": "completed",
-      "source": "loomis_site"
+      "source": "loomis_site,hotchkiss_site"
     },
     {
       "date": "04/24/2026",
@@ -959,6 +1167,15 @@
       "away": "Dexter Southfield School",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "04/24/2026",
+      "home": "Proctor Academy",
+      "away": "St. Paul's School",
+      "status": "completed",
+      "source": "sps_site",
+      "home_score": 0,
+      "away_score": 9
     },
     {
       "date": "04/25/2026",
@@ -1017,7 +1234,7 @@
       "home": "Phillips Exeter Academy",
       "away": "Northfield Mt. Hermon",
       "status": "completed",
-      "source": "exeter_site",
+      "source": "exeter_site,nmh_site",
       "home_score": 7,
       "away_score": 0
     },
@@ -1029,6 +1246,38 @@
       "source": "avon_site",
       "home_score": 0,
       "away_score": 7
+    },
+    {
+      "date": "04/25/2026",
+      "home": "Berkshire School",
+      "away": "Hotchkiss School",
+      "status": "completed",
+      "source": "hotchkiss_site",
+      "home_score": 0,
+      "away_score": 7
+    },
+    {
+      "date": "04/25/2026",
+      "home": "Kent School",
+      "away": "Millbrook School",
+      "status": "completed",
+      "source": "kent_site",
+      "home_score": 5,
+      "away_score": 2
+    },
+    {
+      "date": "04/25/2026",
+      "home": "Philadelphia Doubles Tournament",
+      "away": "Brunswick School",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
+      "date": "04/26/2026",
+      "home": "Philadelphia Doubles Tournament",
+      "away": "Brunswick School",
+      "status": "scheduled",
+      "source": "brunswick_site"
     },
     {
       "date": "04/27/2026",
@@ -1151,6 +1400,34 @@
       "source": "avon_site"
     },
     {
+      "date": "04/29/2026",
+      "home": "St. Paul's School",
+      "away": "Cardigan Mountain School",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "04/29/2026",
+      "home": "Pomfret School",
+      "away": "Loomis Chaffee",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "04/29/2026",
+      "home": "Brunswick School",
+      "away": "Master's",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
+      "date": "04/30/2026",
+      "home": "TBA",
+      "away": "Brunswick School",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
       "date": "05/01/2026",
       "home": "Phillips Academy Andover",
       "away": "Roxbury Latin School",
@@ -1170,6 +1447,20 @@
       "away": "Lawrence Academy",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "05/01/2026",
+      "home": "Holderness School",
+      "away": "St. Paul's School",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/01/2026",
+      "home": "Loomis Chaffee",
+      "away": "Suffield Academy",
+      "status": "scheduled",
+      "source": "loomis_site"
     },
     {
       "date": "05/02/2026",
@@ -1228,6 +1519,34 @@
       "source": "avon_site"
     },
     {
+      "date": "05/02/2026",
+      "home": "St. Paul's School",
+      "away": "Kimball Union Academy",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/02/2026",
+      "home": "Salisbury School",
+      "away": "Loomis Chaffee",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "05/02/2026",
+      "home": "Kingswood Oxford",
+      "away": "Hotchkiss School",
+      "status": "scheduled",
+      "source": "hotchkiss_site"
+    },
+    {
+      "date": "05/02/2026",
+      "home": "Brunswick School",
+      "away": "Alumni Event",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
       "date": "05/04/2026",
       "home": "Noble & Greenough",
       "away": "Lawrence Academy",
@@ -1261,6 +1580,20 @@
       "away": "Taft School",
       "status": "scheduled",
       "source": "avon_site"
+    },
+    {
+      "date": "05/04/2026",
+      "home": "St. Paul's School",
+      "away": "Milton Academy",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/05/2026",
+      "home": "Brunswick School",
+      "away": "Greenwich Country Day",
+      "status": "scheduled",
+      "source": "brunswick_site"
     },
     {
       "date": "05/06/2026",
@@ -1328,11 +1661,46 @@
       "source": "avon_site"
     },
     {
+      "date": "05/06/2026",
+      "home": "St. Paul's School",
+      "away": "Beaver Country Day School",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/06/2026",
+      "home": "Loomis Chaffee",
+      "away": "Northfield Mt. Hermon",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "05/06/2026",
+      "home": "Deerfield Academy",
+      "away": "Hotchkiss School",
+      "status": "scheduled",
+      "source": "hotchkiss_site"
+    },
+    {
+      "date": "05/06/2026",
+      "home": "Brunswick School",
+      "away": "Taft School",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
       "date": "05/08/2026",
       "home": "Lawrence Academy",
       "away": "Tabor Academy",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "05/08/2026",
+      "home": "Westminster School",
+      "away": "Loomis Chaffee",
+      "status": "scheduled",
+      "source": "loomis_site"
     },
     {
       "date": "05/09/2026",
@@ -1412,6 +1780,27 @@
       "source": "avon_site"
     },
     {
+      "date": "05/09/2026",
+      "home": "St. Paul's School",
+      "away": "Lakes Region Tournament",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/09/2026",
+      "home": "SNETL Tournament",
+      "away": "Loomis Chaffee",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "05/09/2026",
+      "home": "Brunswick School",
+      "away": "FAA Tournament",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
       "date": "05/11/2026",
       "home": "Barrington High School",
       "away": "St. George's",
@@ -1438,6 +1827,13 @@
       "away": "Roxbury Latin School",
       "status": "scheduled",
       "source": "isl_feed,rl_site"
+    },
+    {
+      "date": "05/11/2026",
+      "home": "Brunswick School",
+      "away": "FAA Tournament",
+      "status": "scheduled",
+      "source": "brunswick_site"
     },
     {
       "date": "05/13/2026",
@@ -1503,6 +1899,27 @@
       "source": "avon_site"
     },
     {
+      "date": "05/13/2026",
+      "home": "St. Paul's School",
+      "away": "Northfield Mt. Hermon",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/13/2026",
+      "home": "Loomis Chaffee",
+      "away": "Hopkins School",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "05/13/2026",
+      "home": "Choate Rosemary Hall",
+      "away": "Hotchkiss School",
+      "status": "scheduled",
+      "source": "hotchkiss_site"
+    },
+    {
       "date": "05/15/2026",
       "home": "Groton",
       "away": "Rivers School",
@@ -1529,6 +1946,13 @@
       "away": "St. George's",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "05/15/2026",
+      "home": "St. Paul's School",
+      "away": "Brewster Academy",
+      "status": "scheduled",
+      "source": "sps_site"
     },
     {
       "date": "05/16/2026",
@@ -1560,11 +1984,53 @@
       "source": "isl_feed"
     },
     {
+      "date": "05/16/2026",
+      "home": "NEW ENGLANDS",
+      "away": "Loomis Chaffee",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "05/16/2026",
+      "home": "New England Championships",
+      "away": "Brunswick School",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
+      "date": "05/16/2026",
+      "home": "NEPSAC Tournament",
+      "away": "Phillips Academy Andover",
+      "status": "scheduled",
+      "source": "andover_site"
+    },
+    {
       "date": "05/17/2026",
       "home": "Greenwich Country Day",
       "away": "Roxbury Latin School",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "05/17/2026",
+      "home": "NEPSAC",
+      "away": "St. Paul's School",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/17/2026",
+      "home": "New England Championships",
+      "away": "Brunswick School",
+      "status": "scheduled",
+      "source": "brunswick_site"
+    },
+    {
+      "date": "05/17/2026",
+      "home": "Phillips Academy Andover",
+      "away": "NEPSAC Tournament",
+      "status": "scheduled",
+      "source": "andover_site"
     },
     {
       "date": "05/18/2026",
@@ -1651,11 +2117,39 @@
       "source": "isl_feed,nobles_site"
     },
     {
+      "date": "05/22/2026",
+      "home": "NEPSITT",
+      "away": "Phillips Academy Andover",
+      "status": "scheduled",
+      "source": "andover_site"
+    },
+    {
       "date": "05/23/2026",
       "home": "Lawrence Academy",
       "away": "Tabor Academy",
       "status": "scheduled",
       "source": "isl_feed"
+    },
+    {
+      "date": "05/23/2026",
+      "home": "NEPSAC",
+      "away": "St. Paul's School",
+      "status": "scheduled",
+      "source": "sps_site"
+    },
+    {
+      "date": "05/23/2026",
+      "home": "NEPSIT",
+      "away": "Loomis Chaffee",
+      "status": "scheduled",
+      "source": "loomis_site"
+    },
+    {
+      "date": "05/23/2026",
+      "home": "NEPSITT",
+      "away": "Phillips Academy Andover",
+      "status": "scheduled",
+      "source": "andover_site"
     }
   ]
 }

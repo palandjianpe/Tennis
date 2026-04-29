@@ -46,8 +46,12 @@ DATE_RE = re.compile(
     r'class="sidearm-schedule-game-opponent-date[^"]*"[^>]*>\s*<span>([^<]+)</span>',
     re.DOTALL,
 )
+# Opponent name lives inside `sidearm-schedule-game-opponent-name`. Some sites
+# (Phillips Exeter) put the name as plain text right after the div; others
+# (St. Paul's) wrap it in an <a aria-label="..."> tag. We capture the entire
+# inner div then strip tags, which handles both shapes.
 OPP_RE = re.compile(
-    r'class="sidearm-schedule-game-opponent-name"\s*>\s*([^<]+?)(?:<|$)',
+    r'class="sidearm-schedule-game-opponent-name"\s*>(?P<inner>.*?)</div>',
     re.DOTALL,
 )
 RESULT_RE = re.compile(
@@ -123,9 +127,9 @@ def parse_sidearm(
         date = _parse_date(date_match.group(1) if date_match else "", season_year)
         if not date:
             continue
-        # Opponent
+        # Opponent — strip any wrapping <a>/<span> tags then collapse whitespace.
         opp_match = OPP_RE.search(block)
-        opponent = _clean(opp_match.group(1)) if opp_match else ""
+        opponent = _clean(opp_match.group("inner")) if opp_match else ""
         if not opponent:
             continue
         # Result
