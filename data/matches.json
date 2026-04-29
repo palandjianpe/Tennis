@@ -742,7 +742,7 @@
       "home": "Phillips Academy Andover",
       "away": "St. Paul's School",
       "status": "completed",
-      "source": "sps_site,OVERRIDDEN_BY:sps_site",
+      "source": "sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site",
       "home_score": 6,
       "away_score": 3
     },
@@ -1085,7 +1085,7 @@
       "home": "St. Paul's School",
       "away": "Phillips Exeter Academy",
       "status": "completed",
-      "source": "exeter_site,OVERRIDDEN_BY:sps_site",
+      "source": "exeter_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:exeter_site,OVERRIDDEN_BY:sps_site",
       "home_score": 0,
       "away_score": 7
     },
@@ -1618,15 +1618,6 @@
     },
     {
       "date": "05/06/2026",
-      "home": "Noble & Greenough",
-      "away": "Belmont Hill",
-      "status": "completed",
-      "source": "isl_feed,bh_site,nobles_site,manual",
-      "home_score": 2,
-      "away_score": 5
-    },
-    {
-      "date": "05/06/2026",
       "home": "Roxbury Latin School",
       "away": "Middlesex",
       "status": "scheduled",
@@ -1687,6 +1678,13 @@
       "away": "Taft School",
       "status": "scheduled",
       "source": "brunswick_site"
+    },
+    {
+      "date": "05/06/2026",
+      "home": "Noble & Greenough",
+      "away": "Belmont Hill",
+      "status": "scheduled",
+      "source": "isl_feed"
     },
     {
       "date": "05/08/2026",

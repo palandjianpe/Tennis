@@ -261,9 +261,14 @@ def canon(name: str, canonical: set, aliases: dict) -> str:
 
 
 def read_manual() -> list[dict]:
+    """Read manual_scores.csv. Future-dated rows are rejected — a "completed"
+    score for a date that hasn't happened yet is by definition wrong (it's
+    almost always a typo or leftover test data, like the legendary
+    "imagined match" line). We log + skip rather than silently importing them."""
     rows: list[dict] = []
     if not os.path.exists(MANUAL_PATH):
         return rows
+    today = datetime.now().date()
     with open(MANUAL_PATH) as f:
         for raw in f:
             if not raw.strip() or raw.lstrip().startswith("#"):
@@ -278,6 +283,27 @@ def read_manual() -> list[dict]:
                 continue
             try:
                 date, home, hs, away, as_ = parts[:5]
+                d = datetime.strptime(date.strip(), "%m/%d/%Y").date()
+                note = parts[5].strip() if len(parts) > 5 else ""
+                if d > today:
+                    print(
+                        f"  [warn] manual_scores.csv: rejecting future-dated row "
+                        f"{date.strip()} {home.strip()} {hs}-{as_} {away.strip()}"
+                        + (f" ({note})" if note else "")
+                        + " — future games can't be 'completed'.",
+                        file=sys.stderr,
+                    )
+                    continue
+                if note and any(
+                    flag in note.lower()
+                    for flag in ("imagined", "fake", "test", "placeholder", "todo", "tbd")
+                ):
+                    print(
+                        f"  [warn] manual_scores.csv: rejecting row tagged "
+                        f"'{note}' — looks like placeholder data.",
+                        file=sys.stderr,
+                    )
+                    continue
                 rows.append(
                     {
                         "date": date.strip(),
