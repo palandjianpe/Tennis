@@ -1,6 +1,6 @@
 {
   "_comment": "Source of truth for all matches. Edit by hand or via script. Each match: {date: 'MM/DD/YYYY', home, away, home_score, away_score, status: 'completed|scheduled|cancelled|scrimmage', source}",
-  "_last_updated": "2026-04-29",
+  "_last_updated": "2026-04-30",
   "season": "2026",
   "matches": [
     {
@@ -742,7 +742,7 @@
       "home": "Phillips Academy Andover",
       "away": "St. Paul's School",
       "status": "completed",
-      "source": "sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site",
+      "source": "sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:sps_site",
       "home_score": 6,
       "away_score": 3
     },
@@ -812,7 +812,7 @@
       "home_score": 3,
       "away_score": 4,
       "status": "completed",
-      "source": "bh_site"
+      "source": "bh_site,isl_feed"
     },
     {
       "date": "04/17/2026",
@@ -830,7 +830,7 @@
       "home_score": 2,
       "away_score": 5,
       "status": "completed",
-      "source": "bh_site"
+      "source": "bh_site,isl_feed"
     },
     {
       "date": "04/18/2026",
@@ -990,7 +990,7 @@
       "home_score": 7,
       "away_score": 0,
       "status": "completed",
-      "source": "bh_site"
+      "source": "bh_site,isl_feed"
     },
     {
       "date": "04/22/2026",
@@ -1085,7 +1085,7 @@
       "home": "St. Paul's School",
       "away": "Phillips Exeter Academy",
       "status": "completed",
-      "source": "exeter_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:exeter_site,OVERRIDDEN_BY:sps_site",
+      "source": "exeter_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:exeter_site,OVERRIDDEN_BY:sps_site,OVERRIDDEN_BY:exeter_site,OVERRIDDEN_BY:sps_site",
       "home_score": 0,
       "away_score": 7
     },
@@ -1273,6 +1273,15 @@
       "source": "brunswick_site"
     },
     {
+      "date": "04/25/2026",
+      "home": "Belmont Hill",
+      "away": "St. Mark's",
+      "status": "completed",
+      "source": "isl_feed",
+      "home_score": 7,
+      "away_score": 0
+    },
+    {
       "date": "04/26/2026",
       "home": "Philadelphia Doubles Tournament",
       "away": "Brunswick School",
@@ -1326,8 +1335,10 @@
       "date": "04/29/2026",
       "home": "Belmont Hill",
       "away": "Lawrence Academy",
-      "status": "scheduled",
-      "source": "isl_feed,bh_site"
+      "status": "completed",
+      "source": "isl_feed,bh_site,isl_feed",
+      "home_score": 7,
+      "away_score": 0
     },
     {
       "date": "04/29/2026",
@@ -1340,15 +1351,19 @@
       "date": "04/29/2026",
       "home": "Buckingham Browne & Nichols",
       "away": "Thayer Academy",
-      "status": "scheduled",
-      "source": "isl_feed"
+      "status": "completed",
+      "source": "isl_feed,isl_feed",
+      "home_score": 7,
+      "away_score": 0
     },
     {
       "date": "04/29/2026",
       "home": "Middlesex",
       "away": "St. Sebastian's",
-      "status": "scheduled",
-      "source": "isl_feed,mx_site"
+      "status": "completed",
+      "source": "isl_feed,mx_site,isl_feed",
+      "home_score": 6,
+      "away_score": 1
     },
     {
       "date": "04/29/2026",
@@ -1389,36 +1404,55 @@
       "date": "04/29/2026",
       "home": "Phillips Exeter Academy",
       "away": "Phillips Academy",
-      "status": "scheduled",
-      "source": "exeter_site"
+      "status": "completed",
+      "source": "exeter_site,exeter_site",
+      "home_score": 7,
+      "away_score": 0
     },
     {
       "date": "04/29/2026",
       "home": "Avon Old Farms",
       "away": "Hotchkiss School",
-      "status": "scheduled",
-      "source": "avon_site"
+      "status": "completed",
+      "source": "avon_site,avon_site,hotchkiss_site",
+      "home_score": 0,
+      "away_score": 7
     },
     {
       "date": "04/29/2026",
       "home": "St. Paul's School",
       "away": "Cardigan Mountain School",
-      "status": "scheduled",
-      "source": "sps_site"
+      "status": "completed",
+      "source": "sps_site,sps_site",
+      "home_score": 9,
+      "away_score": 0
     },
     {
       "date": "04/29/2026",
       "home": "Pomfret School",
       "away": "Loomis Chaffee",
-      "status": "scheduled",
-      "source": "loomis_site"
+      "status": "completed",
+      "source": "loomis_site,loomis_site",
+      "home_score": 1,
+      "away_score": 6
     },
     {
       "date": "04/29/2026",
       "home": "Brunswick School",
       "away": "Master's",
-      "status": "scheduled",
-      "source": "brunswick_site"
+      "status": "completed",
+      "source": "brunswick_site,brunswick_site",
+      "home_score": 5,
+      "away_score": 2
+    },
+    {
+      "date": "04/29/2026",
+      "home": "Kent School",
+      "away": "Salisbury School",
+      "status": "completed",
+      "source": "kent_site",
+      "home_score": 1,
+      "away_score": 6
     },
     {
       "date": "04/30/2026",
